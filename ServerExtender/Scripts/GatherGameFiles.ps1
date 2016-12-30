@@ -15,6 +15,7 @@ try {
     }
   }
   $contentFolders | %{ Copy-Item -Path "$GamePath\Content\$_" -Destination "$PsScriptRoot\..\bin\x64\Content\" -Recurse -Force -Verbose }
+  New-Item -ItemType Directory -Force -Path "$PSScriptRoot\..\GameFiles"
   Copy-Item -Path "$GamePath\DedicatedServer64\*" -Destination "$PSScriptRoot\..\GameFiles" -Recurse -Force -Verbose
 } catch {
   $_
