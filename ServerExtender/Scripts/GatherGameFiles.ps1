@@ -4,7 +4,7 @@
   [string]$ProjectFolder
 )
 $ErrorActionPreference = 'Stop'
-$spaceEngineersInstallationKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 244851'
+$spaceEngineersInstallationKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 244850'
 $contentFolders = @('Data', 'Models', 'Particles', 'VoxelMaps')
 try {
   $GamePath = (Get-ItemProperty -Path $spaceEngineersInstallationKey -ErrorAction SilentlyContinue).InstallLocation
