@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Hello World!</title>
+</head>
+<body>
+    The server is currently <span id="serverStatus"></span>.
+    <button id="startServer" disabled>Start</button>
+    <button id="stopServer" disabled>Stop</button>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.signalR.min.js"></script>
+    <script src="http://localhost:9000/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var lblStatus = $('#serverStatus');
+            var btnStart = $('#startServer');
+            var btnStop = $('#stopServer');
+
+            $.connection.hub.url = "http://localhost:9000/signalr";
+
+            var server = $.connection.serverHub;
+
+            server.client.updateStatus = function (status) {
+                lblStatus.text(status);
+
+                btnStart.prop('disabled', status != 'stopped');
+                btnStop.prop('disabled', status == 'stopped');
+            };
+
+            $.connection.hub.start().done(function () {
+                server.server.updateStatus();
+
+                btnStart.click(function () {
+                    server.server.start();
+                });
+                btnStop.click(function () {
+                    server.server.stop();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

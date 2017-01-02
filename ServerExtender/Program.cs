@@ -58,7 +58,9 @@ namespace ServerExtender
 
 
 			Console.WriteLine("Hello");*/
-			Console.ReadKey(false);
+			Console.Read();
+			Console.Read();
+			Console.Read();
 
 			GameServer.Clean();
 		}

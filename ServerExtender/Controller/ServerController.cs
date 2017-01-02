@@ -12,24 +12,13 @@ namespace ServerExtender.Controller
 		[HttpGet]
 		public string Status()
 		{
-			if (GameServer.IsReady)
-			{
-				return "Started";
-			}
-			else if(GameServer.IsRunning)
-			{
-				return "Starting";
-			}
-			else
-			{
-				return "Stopped";
-			}
+			return GameServer.GetStatus();
 		}
 
 		[HttpGet]
 		public string Start()
 		{
-			if(GameServer.IsRunning)
+			if (GameServer.IsRunning)
 			{
 				return "Already started";
 			}
