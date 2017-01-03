@@ -140,97 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="GameFiles\SpaceEngineersDedicated.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GameFiles\d3dcompiler_47.dll" />
-    <Content Include="GameFiles\d3dcsx_47.dll" />
-    <Content Include="GameFiles\D3DX9_43.dll" />
-    <Content Include="GameFiles\HavokWrapper.dll" />
-    <Content Include="GameFiles\HavokWrapper.xml" />
-    <Content Include="GameFiles\InfinarioSDK.dll" />
-    <Content Include="GameFiles\Microsoft.CodeAnalysis.CSharp.dll" />
-    <Content Include="GameFiles\Microsoft.CodeAnalysis.CSharp.xml" />
-    <Content Include="GameFiles\Microsoft.CodeAnalysis.dll" />
-    <Content Include="GameFiles\Microsoft.CodeAnalysis.xml" />
-    <Content Include="GameFiles\Microsoft.IdentityModel.Logging.dll" />
-    <Content Include="GameFiles\Microsoft.IdentityModel.Tokens.dll" />
-    <Content Include="GameFiles\msvcp110.dll" />
-    <Content Include="GameFiles\msvcp110_clr0400.dll" />
-    <Content Include="GameFiles\msvcp120.dll" />
-    <Content Include="GameFiles\msvcr110.dll" />
-    <Content Include="GameFiles\msvcr110_clr0400.dll" />
-    <Content Include="GameFiles\msvcr120.dll" />
-    <Content Include="GameFiles\Newtonsoft.Json.dll" />
-    <Content Include="GameFiles\openvr_api.dll" />
-    <Content Include="GameFiles\postbuild.txt" />
-    <Content Include="GameFiles\RecastDetourWrapper.dll" />
-    <Content Include="GameFiles\Sandbox.Common.dll" />
-    <Content Include="GameFiles\Sandbox.Common.xml" />
-    <Content Include="GameFiles\Sandbox.Game.dll" />
-    <Content Include="GameFiles\Sandbox.Graphics.dll" />
-    <Content Include="GameFiles\SharpDX.D3DCompiler.dll" />
-    <Content Include="GameFiles\SharpDX.D3DCompiler.xml" />
-    <Content Include="GameFiles\SharpDX.Desktop.dll" />
-    <Content Include="GameFiles\SharpDX.Desktop.xml" />
-    <Content Include="GameFiles\SharpDX.Direct2D1.dll" />
-    <Content Include="GameFiles\SharpDX.Direct2D1.xml" />
-    <Content Include="GameFiles\SharpDX.Direct3D11.dll" />
-    <Content Include="GameFiles\SharpDX.Direct3D11.xml" />
-    <Content Include="GameFiles\SharpDX.Direct3D9.dll" />
-    <Content Include="GameFiles\SharpDX.Direct3D9.xml" />
-    <Content Include="GameFiles\SharpDX.DirectInput.dll" />
-    <Content Include="GameFiles\SharpDX.DirectInput.xml" />
-    <Content Include="GameFiles\SharpDX.dll" />
-    <Content Include="GameFiles\SharpDX.DXGI.dll" />
-    <Content Include="GameFiles\SharpDX.DXGI.xml" />
-    <Content Include="GameFiles\SharpDX.Mathematics.dll" />
-    <Content Include="GameFiles\SharpDX.Mathematics.xml" />
-    <Content Include="GameFiles\SharpDX.Toolkit.dll" />
-    <Content Include="GameFiles\SharpDX.Toolkit.xml" />
-    <Content Include="GameFiles\SharpDX.XAudio2.dll" />
-    <Content Include="GameFiles\SharpDX.XAudio2.xml" />
-    <Content Include="GameFiles\SharpDX.xml" />
-    <Content Include="GameFiles\SpaceEngineers.Game.dll" />
-    <Content Include="GameFiles\SpaceEngineers.ico" />
-    <Content Include="GameFiles\SpaceEngineers.ObjectBuilders.dll" />
-    <Content Include="GameFiles\SpaceEngineers.ObjectBuilders.XmlSerializers.dll" />
-    <Content Include="GameFiles\SpaceEngineersDedicated.exe" />
-    <Content Include="GameFiles\steamclient.dll" />
-    <Content Include="GameFiles\steamclient64.dll" />
-    <Content Include="GameFiles\SteamSDK.dll" />
-    <Content Include="GameFiles\steam_api.dll" />
-    <Content Include="GameFiles\steam_api64.dll" />
-    <Content Include="GameFiles\steam_appid.txt" />
-    <Content Include="GameFiles\System.Collections.Immutable.dll" />
-    <Content Include="GameFiles\System.Collections.Immutable.xml" />
-    <Content Include="GameFiles\System.Data.SQLite.dll" />
-    <Content Include="GameFiles\System.Data.SQLite.xml" />
-    <Content Include="GameFiles\System.IdentityModel.Tokens.Jwt.dll" />
-    <Content Include="GameFiles\System.Reflection.Metadata.dll" />
-    <Content Include="GameFiles\System.Reflection.Metadata.xml" />
-    <Content Include="GameFiles\tier0_s.dll" />
-    <Content Include="GameFiles\tier0_s64.dll" />
-    <Content Include="GameFiles\VRage.Audio.dll" />
-    <Content Include="GameFiles\VRage.Dedicated.dll" />
-    <Content Include="GameFiles\VRage.dll" />
-    <Content Include="GameFiles\VRage.Game.dll" />
-    <Content Include="GameFiles\VRage.Game.xml" />
-    <Content Include="GameFiles\VRage.Game.XmlSerializers.dll" />
-    <Content Include="GameFiles\VRage.Input.dll" />
-    <Content Include="GameFiles\VRage.Library.dll" />
-    <Content Include="GameFiles\VRage.Library.xml" />
-    <Content Include="GameFiles\VRage.Math.dll" />
-    <Content Include="GameFiles\VRage.Math.xml" />
-    <Content Include="GameFiles\VRage.Native.dll" />
-    <Content Include="GameFiles\VRage.OpenVRWrapper.dll" />
-    <Content Include="GameFiles\VRage.Render.dll" />
-    <Content Include="GameFiles\VRage.Render11.dll" />
-    <Content Include="GameFiles\VRage.Scripting.dll" />
-    <Content Include="GameFiles\VRage.xml" />
-    <Content Include="GameFiles\vstdlib_s.dll" />
-    <Content Include="GameFiles\vstdlib_s64.dll" />
     <Content Include="www\js\jquery.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -249,7 +161,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>IF NOT EXIST "$(SolutionDir)\GameFiles" CALL "$(SolutionDir)\bootstrap.bat"</PreBuildEvent>
+    <PreBuildEvent>IF NOT EXIST "$(SolutionDir)GameFiles" CALL "$(SolutionDir)bootstrap.bat"
+
+ECHO Gathering GameFiles
+XCOPY "$(SolutionDir)GameFiles\*" "$(TargetDir)" /y /f</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

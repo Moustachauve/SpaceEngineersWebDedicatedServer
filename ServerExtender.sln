@@ -1,11 +1,101 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26009.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerExtender", "ServerExtender\ServerExtender.csproj", "{58B5A805-DDC3-4F44-9EDC-D150D18A0EE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{B679E2F4-0745-44BA-830B-A3B2468B1D27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameFiles", "GameFiles", "{4CCD20EA-D98D-4E5E-8EEE-64742068C96C}"
+	ProjectSection(SolutionItems) = preProject
+		GameFiles\d3dcompiler_47.dll = GameFiles\d3dcompiler_47.dll
+		GameFiles\d3dcsx_47.dll = GameFiles\d3dcsx_47.dll
+		GameFiles\D3DX9_43.dll = GameFiles\D3DX9_43.dll
+		GameFiles\HavokWrapper.dll = GameFiles\HavokWrapper.dll
+		GameFiles\HavokWrapper.xml = GameFiles\HavokWrapper.xml
+		GameFiles\InfinarioSDK.dll = GameFiles\InfinarioSDK.dll
+		GameFiles\Microsoft.CodeAnalysis.CSharp.dll = GameFiles\Microsoft.CodeAnalysis.CSharp.dll
+		GameFiles\Microsoft.CodeAnalysis.CSharp.xml = GameFiles\Microsoft.CodeAnalysis.CSharp.xml
+		GameFiles\Microsoft.CodeAnalysis.dll = GameFiles\Microsoft.CodeAnalysis.dll
+		GameFiles\Microsoft.CodeAnalysis.xml = GameFiles\Microsoft.CodeAnalysis.xml
+		GameFiles\Microsoft.IdentityModel.Logging.dll = GameFiles\Microsoft.IdentityModel.Logging.dll
+		GameFiles\Microsoft.IdentityModel.Tokens.dll = GameFiles\Microsoft.IdentityModel.Tokens.dll
+		GameFiles\msvcp110.dll = GameFiles\msvcp110.dll
+		GameFiles\msvcp110_clr0400.dll = GameFiles\msvcp110_clr0400.dll
+		GameFiles\msvcp120.dll = GameFiles\msvcp120.dll
+		GameFiles\msvcr110.dll = GameFiles\msvcr110.dll
+		GameFiles\msvcr110_clr0400.dll = GameFiles\msvcr110_clr0400.dll
+		GameFiles\msvcr120.dll = GameFiles\msvcr120.dll
+		GameFiles\Newtonsoft.Json.dll = GameFiles\Newtonsoft.Json.dll
+		GameFiles\openvr_api.dll = GameFiles\openvr_api.dll
+		GameFiles\postbuild.txt = GameFiles\postbuild.txt
+		GameFiles\RecastDetourWrapper.dll = GameFiles\RecastDetourWrapper.dll
+		GameFiles\Sandbox.Common.dll = GameFiles\Sandbox.Common.dll
+		GameFiles\Sandbox.Common.xml = GameFiles\Sandbox.Common.xml
+		GameFiles\Sandbox.Game.dll = GameFiles\Sandbox.Game.dll
+		GameFiles\Sandbox.Graphics.dll = GameFiles\Sandbox.Graphics.dll
+		GameFiles\SharpDX.D3DCompiler.dll = GameFiles\SharpDX.D3DCompiler.dll
+		GameFiles\SharpDX.D3DCompiler.xml = GameFiles\SharpDX.D3DCompiler.xml
+		GameFiles\SharpDX.Desktop.dll = GameFiles\SharpDX.Desktop.dll
+		GameFiles\SharpDX.Desktop.xml = GameFiles\SharpDX.Desktop.xml
+		GameFiles\SharpDX.Direct2D1.dll = GameFiles\SharpDX.Direct2D1.dll
+		GameFiles\SharpDX.Direct2D1.xml = GameFiles\SharpDX.Direct2D1.xml
+		GameFiles\SharpDX.Direct3D11.dll = GameFiles\SharpDX.Direct3D11.dll
+		GameFiles\SharpDX.Direct3D11.xml = GameFiles\SharpDX.Direct3D11.xml
+		GameFiles\SharpDX.Direct3D9.dll = GameFiles\SharpDX.Direct3D9.dll
+		GameFiles\SharpDX.Direct3D9.xml = GameFiles\SharpDX.Direct3D9.xml
+		GameFiles\SharpDX.DirectInput.dll = GameFiles\SharpDX.DirectInput.dll
+		GameFiles\SharpDX.DirectInput.xml = GameFiles\SharpDX.DirectInput.xml
+		GameFiles\SharpDX.dll = GameFiles\SharpDX.dll
+		GameFiles\SharpDX.DXGI.dll = GameFiles\SharpDX.DXGI.dll
+		GameFiles\SharpDX.DXGI.xml = GameFiles\SharpDX.DXGI.xml
+		GameFiles\SharpDX.Mathematics.dll = GameFiles\SharpDX.Mathematics.dll
+		GameFiles\SharpDX.Mathematics.xml = GameFiles\SharpDX.Mathematics.xml
+		GameFiles\SharpDX.Toolkit.dll = GameFiles\SharpDX.Toolkit.dll
+		GameFiles\SharpDX.Toolkit.xml = GameFiles\SharpDX.Toolkit.xml
+		GameFiles\SharpDX.XAudio2.dll = GameFiles\SharpDX.XAudio2.dll
+		GameFiles\SharpDX.XAudio2.xml = GameFiles\SharpDX.XAudio2.xml
+		GameFiles\SharpDX.xml = GameFiles\SharpDX.xml
+		GameFiles\SpaceEngineers.Game.dll = GameFiles\SpaceEngineers.Game.dll
+		GameFiles\SpaceEngineers.ico = GameFiles\SpaceEngineers.ico
+		GameFiles\SpaceEngineers.ObjectBuilders.dll = GameFiles\SpaceEngineers.ObjectBuilders.dll
+		GameFiles\SpaceEngineers.ObjectBuilders.XmlSerializers.dll = GameFiles\SpaceEngineers.ObjectBuilders.XmlSerializers.dll
+		GameFiles\steam_api.dll = GameFiles\steam_api.dll
+		GameFiles\steam_api64.dll = GameFiles\steam_api64.dll
+		GameFiles\steam_appid.txt = GameFiles\steam_appid.txt
+		GameFiles\steamclient.dll = GameFiles\steamclient.dll
+		GameFiles\steamclient64.dll = GameFiles\steamclient64.dll
+		GameFiles\SteamSDK.dll = GameFiles\SteamSDK.dll
+		GameFiles\System.Collections.Immutable.dll = GameFiles\System.Collections.Immutable.dll
+		GameFiles\System.Collections.Immutable.xml = GameFiles\System.Collections.Immutable.xml
+		GameFiles\System.Data.SQLite.dll = GameFiles\System.Data.SQLite.dll
+		GameFiles\System.Data.SQLite.xml = GameFiles\System.Data.SQLite.xml
+		GameFiles\System.IdentityModel.Tokens.Jwt.dll = GameFiles\System.IdentityModel.Tokens.Jwt.dll
+		GameFiles\System.Reflection.Metadata.dll = GameFiles\System.Reflection.Metadata.dll
+		GameFiles\System.Reflection.Metadata.xml = GameFiles\System.Reflection.Metadata.xml
+		GameFiles\tier0_s.dll = GameFiles\tier0_s.dll
+		GameFiles\tier0_s64.dll = GameFiles\tier0_s64.dll
+		GameFiles\VRage.Audio.dll = GameFiles\VRage.Audio.dll
+		GameFiles\VRage.Dedicated.dll = GameFiles\VRage.Dedicated.dll
+		GameFiles\VRage.dll = GameFiles\VRage.dll
+		GameFiles\VRage.Game.dll = GameFiles\VRage.Game.dll
+		GameFiles\VRage.Game.xml = GameFiles\VRage.Game.xml
+		GameFiles\VRage.Game.XmlSerializers.dll = GameFiles\VRage.Game.XmlSerializers.dll
+		GameFiles\VRage.Input.dll = GameFiles\VRage.Input.dll
+		GameFiles\VRage.Library.dll = GameFiles\VRage.Library.dll
+		GameFiles\VRage.Library.xml = GameFiles\VRage.Library.xml
+		GameFiles\VRage.Math.dll = GameFiles\VRage.Math.dll
+		GameFiles\VRage.Math.xml = GameFiles\VRage.Math.xml
+		GameFiles\VRage.Native.dll = GameFiles\VRage.Native.dll
+		GameFiles\VRage.OpenVRWrapper.dll = GameFiles\VRage.OpenVRWrapper.dll
+		GameFiles\VRage.Render.dll = GameFiles\VRage.Render.dll
+		GameFiles\VRage.Render11.dll = GameFiles\VRage.Render11.dll
+		GameFiles\VRage.Scripting.dll = GameFiles\VRage.Scripting.dll
+		GameFiles\VRage.xml = GameFiles\VRage.xml
+		GameFiles\vstdlib_s.dll = GameFiles\vstdlib_s.dll
+		GameFiles\vstdlib_s64.dll = GameFiles\vstdlib_s64.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
