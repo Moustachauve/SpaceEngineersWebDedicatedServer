@@ -13,6 +13,7 @@ namespace ServerExtender.Hubs
 
         public ServerHub()
         {
+            //TODO: Do not use an event here, this is created more than once!!
             DedicatedGameServer.ServerEvents.StatusChanged += OnServerStatusChanged;
         }
 
@@ -21,14 +22,13 @@ namespace ServerExtender.Hubs
             Clients.All.updateStatus(DedicatedGameServer.GetStatus());
         }
 
-		public void Start()
+        public void Start()
 		{
 			if (DedicatedGameServer.IsRunning)
 			{
 				//Already started
 				return;
 			}
-
 
             DedicatedGameServer.Start();
 			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
@@ -46,9 +46,14 @@ namespace ServerExtender.Hubs
 			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
 		}
 
-		public void UpdateStatus()
-		{
-			Clients.Caller.updateStatus(DedicatedGameServer.GetStatus());
-		}
-	}
+        public void UpdateStatus()
+        {
+            Clients.Caller.updateStatus(DedicatedGameServer.GetStatus());
+        }
+
+        public void GetConsoleText()
+        {
+            Clients.Caller.consoleReplace(ConsoleHandler.Instance.Log);
+        }
+    }
 }

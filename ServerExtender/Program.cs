@@ -13,6 +13,7 @@ namespace ServerExtender
         [STAThread]
         static void Main(string[] args)
         {
+            Console.SetOut(ConsoleHandler.Instance);
             Console.WriteLine("Initializing...");
 
 			WebServer webServer = new WebServer();
