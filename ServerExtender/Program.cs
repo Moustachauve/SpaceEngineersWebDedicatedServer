@@ -1,22 +1,7 @@
-﻿using Sandbox;
-using Sandbox.Common.ObjectBuilders;
-using Sandbox.Engine.Utils;
-using Sandbox.Game;
-using Sandbox.Game.Entities;
-using SpaceEngineers.Game;
+﻿
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using VRage.Dedicated;
-using VRage.FileSystem;
-using VRage.Game;
-using VRage.Game.Entity;
-using VRage.Game.SessionComponents;
-using VRage.Service;
-using VRage.Utils;
-using VRageRender;
+using GameServer;
+
 
 namespace ServerExtender
 {
@@ -36,33 +21,10 @@ namespace ServerExtender
 			Console.WriteLine("Server started.");
 
 
+            Console.ReadLine();
 
 
-			/*GameServer server = new GameServer();
-			server.Start();
-
-			while(MySandboxGame.Static == null || !MySandboxGame.Static.IsFirstUpdateDone)
-			{
-				Thread.Sleep(500);
-			}
-
-			MyEntity[] entities = new MyEntity[0];
-			server.GameAction(() => entities = MyEntities.GetEntities().ToArray());
-
-			foreach(var entity in entities)
-			{
-				Console.WriteLine(entity.DisplayName);
-			}
-
-			server.Stop();
-
-
-			Console.WriteLine("Hello");*/
-			Console.Read();
-			Console.Read();
-			Console.Read();
-
-			GameServer.Clean();
+            DedicatedGameServer.Clean();
 		}
 
     }

@@ -104,29 +104,6 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sandbox.Common">
-      <HintPath>GameFiles\Sandbox.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Sandbox.Game, Version=0.1.6202.398, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\Sandbox.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="Sandbox.Graphics, Version=0.1.6202.395, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\Sandbox.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="SpaceEngineers.Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\SpaceEngineers.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="SpaceEngineers.ObjectBuilders, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\SpaceEngineers.ObjectBuilders.dll</HintPath>
-    </Reference>
-    <Reference Include="SpaceEngineers.ObjectBuilders.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\SpaceEngineers.ObjectBuilders.XmlSerializers.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -151,38 +128,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VRage">
-      <HintPath>GameFiles\VRage.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Dedicated, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Dedicated.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Library.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Render, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Render.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Render11, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameFiles\VRage.Render11.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DefaultController.cs" />
     <Compile Include="Controller\ServerController.cs" />
-    <Compile Include="GameServer.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="Hubs\ServerHub.cs" />
     <Compile Include="Program.cs" />
@@ -291,6 +240,12 @@
     <None Include="www\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameServer\GameServer.csproj">
+      <Project>{b679e2f4-0745-44ba-830b-a3b2468b1d27}</Project>
+      <Name>GameServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

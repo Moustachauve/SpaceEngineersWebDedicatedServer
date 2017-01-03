@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using GameServer;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +10,45 @@ namespace ServerExtender.Hubs
 {
 	public class ServerHub : Hub
 	{
+
+        public ServerHub()
+        {
+            DedicatedGameServer.ServerEvents.StatusChanged += OnServerStatusChanged;
+        }
+
+        private void OnServerStatusChanged(object sender, EventArgs args)
+        {
+            Clients.All.updateStatus(DedicatedGameServer.GetStatus());
+        }
+
 		public void Start()
 		{
-			if (GameServer.IsRunning)
+			if (DedicatedGameServer.IsRunning)
 			{
 				//Already started
 				return;
 			}
 
 
-			GameServer.Start();
-			Clients.All.updateStatus(GameServer.GetStatus());
+            DedicatedGameServer.Start();
+			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
 		}
 
 		public void Stop()
 		{
-			if (!GameServer.IsRunning)
+			if (!DedicatedGameServer.IsRunning)
 			{
 				//return "Not started";
 				return;
 			}
 
-			GameServer.Stop();
-			Clients.All.updateStatus(GameServer.GetStatus());
+            DedicatedGameServer.Stop();
+			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
 		}
 
 		public void UpdateStatus()
 		{
-			Clients.Caller.updateStatus(GameServer.GetStatus());
+			Clients.Caller.updateStatus(DedicatedGameServer.GetStatus());
 		}
 	}
 }

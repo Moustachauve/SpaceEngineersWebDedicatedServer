@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,30 +13,30 @@ namespace ServerExtender.Controller
 		[HttpGet]
 		public string Status()
 		{
-			return GameServer.GetStatus();
+			return DedicatedGameServer.GetStatus();
 		}
 
 		[HttpGet]
 		public string Start()
 		{
-			if (GameServer.IsRunning)
+			if (DedicatedGameServer.IsRunning)
 			{
 				return "Already started";
 			}
 
-			GameServer.Start();
+            DedicatedGameServer.Start();
 			return "Ok";
 		}
 
 		[HttpGet]
 		public string Stop()
 		{
-			if (!GameServer.IsRunning)
+			if (!DedicatedGameServer.IsRunning)
 			{
 				return "Not started";
 			}
 
-			GameServer.Stop();
+            DedicatedGameServer.Stop();
 			return "Ok";
 		}
 	}

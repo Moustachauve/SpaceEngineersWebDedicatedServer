@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerExtender", "ServerExtender\ServerExtender.csproj", "{58B5A805-DDC3-4F44-9EDC-D150D18A0EE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{B679E2F4-0745-44BA-830B-A3B2468B1D27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{58B5A805-DDC3-4F44-9EDC-D150D18A0EE7}.Debug|x64.Build.0 = Debug|x64
 		{58B5A805-DDC3-4F44-9EDC-D150D18A0EE7}.Release|x64.ActiveCfg = Release|x64
 		{58B5A805-DDC3-4F44-9EDC-D150D18A0EE7}.Release|x64.Build.0 = Release|x64
+		{B679E2F4-0745-44BA-830B-A3B2468B1D27}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B679E2F4-0745-44BA-830B-A3B2468B1D27}.Debug|x64.Build.0 = Debug|Any CPU
+		{B679E2F4-0745-44BA-830B-A3B2468B1D27}.Release|x64.ActiveCfg = Release|Any CPU
+		{B679E2F4-0745-44BA-830B-A3B2468B1D27}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
