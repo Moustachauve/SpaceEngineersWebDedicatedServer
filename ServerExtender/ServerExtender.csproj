@@ -130,6 +130,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Controller\DefaultController.cs" />
     <Compile Include="Controller\ServerController.cs" />
     <Compile Include="Hubs\MyHub.cs" />

@@ -10,6 +10,8 @@
     <button id="startServer" disabled>Start</button>
     <button id="stopServer" disabled>Stop</button>
 
+    <h3>Console</h3>
+    <pre id="console"></pre>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.signalR.min.js"></script>
@@ -17,6 +19,7 @@
     <script type="text/javascript">
         $(function () {
 
+            var console = $('#console');
             var lblStatus = $('#serverStatus');
             var btnStart = $('#startServer');
             var btnStop = $('#stopServer');
@@ -32,8 +35,17 @@
                 btnStop.prop('disabled', status == 'stopped');
             };
 
+            server.client.consoleWrite = function (newText) {
+                console.append(newText);
+            }
+
+            server.client.consoleReplace = function (newText) {
+                console.text(newText);
+            }
+
             $.connection.hub.start().done(function () {
                 server.server.updateStatus();
+                server.server.getConsoleText();
 
                 btnStart.click(function () {
                     server.server.start();
