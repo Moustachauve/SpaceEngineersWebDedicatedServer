@@ -35,24 +35,31 @@
   <ItemGroup>
     <Reference Include="Sandbox.Common">
       <HintPath>..\ServerExtender\GameFiles\Sandbox.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sandbox.Game">
       <HintPath>..\ServerExtender\GameFiles\Sandbox.Game.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sandbox.Graphics">
       <HintPath>..\ServerExtender\GameFiles\Sandbox.Graphics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SpaceEngineers.Game">
       <HintPath>..\ServerExtender\GameFiles\SpaceEngineers.Game.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SpaceEngineers.ObjectBuilders">
       <HintPath>..\ServerExtender\GameFiles\SpaceEngineers.ObjectBuilders.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SpaceEngineers.ObjectBuilders.XmlSerializers">
       <HintPath>..\ServerExtender\GameFiles\SpaceEngineers.ObjectBuilders.XmlSerializers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SteamSDK">
       <HintPath>..\ServerExtender\GameFiles\SteamSDK.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,39 +71,51 @@
     <Reference Include="System.Xml" />
     <Reference Include="VRage">
       <HintPath>..\ServerExtender\GameFiles\VRage.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Audio">
       <HintPath>..\ServerExtender\GameFiles\VRage.Audio.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Dedicated">
       <HintPath>..\ServerExtender\GameFiles\VRage.Dedicated.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Game">
       <HintPath>..\ServerExtender\GameFiles\VRage.Game.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Game.XmlSerializers">
       <HintPath>..\ServerExtender\GameFiles\VRage.Game.XmlSerializers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Input">
       <HintPath>..\ServerExtender\GameFiles\VRage.Input.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Library">
       <HintPath>..\ServerExtender\GameFiles\VRage.Library.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Math">
       <HintPath>..\ServerExtender\GameFiles\VRage.Math.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Native">
       <HintPath>..\ServerExtender\GameFiles\VRage.Native.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Render">
       <HintPath>..\ServerExtender\GameFiles\VRage.Render.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Render11">
       <HintPath>..\ServerExtender\GameFiles\VRage.Render11.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VRage.Scripting">
       <HintPath>..\ServerExtender\GameFiles\VRage.Scripting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
