@@ -275,7 +275,8 @@ __pycache__/
 # tools/
 
 #Space Engineers dlls
-ServerExtender/GameFiles
+GameFiles
 
 #Binaries
 ServerExtender/bin
+GameServer/bin

@@ -14,7 +14,7 @@ try {
       throw "The heck, where is your Space Engineers Installation!?"
     }
   }
-  $contentFolders | %{ Copy-Item -Path "$GamePath\Content\$_" -Destination "$PsScriptRoot\..\bin\x64\Content\" -Recurse -Force -Verbose }
+  $contentFolders | %{ Copy-Item -Path "$GamePath\Content\$_" -Destination "$PsScriptRoot\..\ServerExtender\bin\x64\Content\" -Recurse -Force -Verbose -Container }
   New-Item -ItemType Directory -Force -Path "$PSScriptRoot\..\GameFiles"
   Copy-Item -Path "$GamePath\DedicatedServer64\*" -Destination "$PSScriptRoot\..\GameFiles" -Recurse -Force -Verbose
 } catch {
