@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <title>Hello World!</title>
+
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/angular.min.js"></script>
 </head>
 <body>
     The server is currently <span id="serverStatus"></span>.
@@ -13,9 +16,13 @@
     <h3>Console</h3>
     <pre id="console"></pre>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.signalR.min.js"></script>
+    <script src="js/lib/jquery.signalR.min.js"></script>
     <script src="http://localhost:9000/signalr/hubs"></script>
+
+    <script src="angular/application.js"></script>
+    <script src="angular/route.js"></script>
+    <script src="angular/controllers/error/errorController.js"></script>
+
     <script type="text/javascript">
         $(function () {
 
