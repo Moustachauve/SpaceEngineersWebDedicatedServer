@@ -6,22 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerExtender.Hubs
+namespace GameServer.Hubs
 {
 	public class ServerHub : Hub
 	{
-
-        public ServerHub()
-        {
-            //TODO: Do not use an event here, this is created more than once!!
-            DedicatedGameServer.ServerEvents.StatusChanged += OnServerStatusChanged;
-        }
-
-        private void OnServerStatusChanged(object sender, EventArgs args)
-        {
-            Clients.All.updateStatus(DedicatedGameServer.GetStatus());
-        }
-
         public void Start()
 		{
 			if (DedicatedGameServer.IsRunning)
@@ -49,11 +37,6 @@ namespace ServerExtender.Hubs
         public void UpdateStatus()
         {
             Clients.Caller.updateStatus(DedicatedGameServer.GetStatus());
-        }
-
-        public void GetConsoleText()
-        {
-            Clients.Caller.consoleReplace(ConsoleHandler.Instance.Log);
         }
     }
 }

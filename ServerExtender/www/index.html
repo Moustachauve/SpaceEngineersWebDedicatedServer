@@ -26,32 +26,33 @@
 
             $.connection.hub.url = "http://localhost:9000/signalr";
 
-            var server = $.connection.serverHub;
+            var gameServerHub = $.connection.serverHub;
+            var serverConsoleHub = $.connection.consoleHub;
 
-            server.client.updateStatus = function (status) {
+            gameServerHub.client.updateStatus = function (status) {
                 lblStatus.text(status);
 
                 btnStart.prop('disabled', status != 'stopped');
                 btnStop.prop('disabled', status == 'stopped');
             };
 
-            server.client.consoleWrite = function (newText) {
+            serverConsoleHub.client.consoleWrite = function (newText) {
                 console.append(newText);
             }
 
-            server.client.consoleReplace = function (newText) {
+            serverConsoleHub.client.consoleReplace = function (newText) {
                 console.text(newText);
             }
 
             $.connection.hub.start().done(function () {
-                server.server.updateStatus();
-                server.server.getConsoleText();
+                gameServerHub.server.updateStatus();
+                serverConsoleHub.server.getConsoleText();
 
                 btnStart.click(function () {
-                    server.server.start();
+                    gameServerHub.server.start();
                 });
                 btnStop.click(function () {
-                    server.server.stop();
+                    gameServerHub.server.stop();
                 });
             });
         });

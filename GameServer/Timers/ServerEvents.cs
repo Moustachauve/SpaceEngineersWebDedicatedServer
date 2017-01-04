@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameServer.Hubs;
+using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +19,9 @@ namespace GameServer.Timers
         public ServerEvents()
         {
             timer = new Timer(new TimerCallback(CheckForEvents), new AutoResetEvent(false), 0, 1000);
-        }
+			StatusChanged += OnServerStatusChanged;
+
+		}
 
         private void CheckForEvents(object state)
         {
@@ -35,5 +39,10 @@ namespace GameServer.Timers
 
             previousStatus = currentStatus;
         }
-    }
+
+		private void OnServerStatusChanged(object sender, EventArgs args)
+		{
+			GlobalHost.ConnectionManager.GetHubContext<ServerHub>().Clients.All.updateStatus(DedicatedGameServer.GetStatus());
+		}
+	}
 }

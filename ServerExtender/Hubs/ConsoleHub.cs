@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server_Extender.Hubs
+namespace ServerExtender.Hubs
 {
-	public class MyHub : Hub
+	public class ConsoleHub : Hub
 	{
-		public void Send(string name, string message)
+		public void GetConsoleText()
 		{
-			Clients.All.addMessage(name, message);
+			Clients.Caller.consoleReplace(ConsoleHandler.Instance.Log);
 		}
 	}
 }
