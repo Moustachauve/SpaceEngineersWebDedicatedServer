@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNet.SignalR;
 using ServerExtender.Hubs;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerExtender
 {
@@ -51,7 +48,7 @@ namespace ServerExtender
             consoleWriter.WriteLine(value);
             base.WriteLine(value);
 
-            GlobalHost.ConnectionManager.GetHubContext<ServerHub>().Clients.All.consoleWrite(value + NewLine);
+            GlobalHost.ConnectionManager.GetHubContext<ConsoleHub>().Clients.All.consoleWrite(value + NewLine);
             WriteEvent?.Invoke(this, value + NewLine);
         }
     }
