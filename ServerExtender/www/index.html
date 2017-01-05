@@ -1,68 +1,38 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" ng-app="ServerExtender" ng-controller="applicationController">
 <head>
     <meta charset="utf-8" />
-    <title>Hello World!</title>
+    <base href="/">
+
+    <title>{{pageTitle}} - Space Engineers Dedicated Server</title>
 
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/angular.min.js"></script>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+    </style>
 </head>
 <body>
-    The server is currently <span id="serverStatus"></span>.
-    <button id="startServer" disabled>Start</button>
-    <button id="stopServer" disabled>Stop</button>
 
-    <h3>Console</h3>
-    <pre id="console"></pre>
+    <div class="container" ng-view></div>
 
     <script src="js/lib/jquery.signalR.min.js"></script>
     <script src="http://localhost:9000/signalr/hubs"></script>
 
+    <script src="js/lib/angular-route.min.js"></script>
+    <script src="js/lib/signalr-hub.min.js"></script>
     <script src="angular/application.js"></script>
+    <script src="angular/Services/serverHubService.js"></script>
+    <script src="angular/Services/consoleHubService.js"></script>
     <script src="angular/route.js"></script>
     <script src="angular/controllers/error/errorController.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-
-            var console = $('#console');
-            var lblStatus = $('#serverStatus');
-            var btnStart = $('#startServer');
-            var btnStop = $('#stopServer');
-
-            $.connection.hub.url = "http://localhost:9000/signalr";
-
-            var gameServerHub = $.connection.serverHub;
-            var serverConsoleHub = $.connection.consoleHub;
-
-            gameServerHub.client.updateStatus = function (status) {
-                lblStatus.text(status);
-
-                btnStart.prop('disabled', status != 'stopped');
-                btnStop.prop('disabled', status == 'stopped');
-            };
-
-            serverConsoleHub.client.consoleWrite = function (newText) {
-                console.append(newText);
-            }
-
-            serverConsoleHub.client.consoleReplace = function (newText) {
-                console.text(newText);
-            }
-
-            $.connection.hub.start().done(function () {
-                gameServerHub.server.updateStatus();
-                serverConsoleHub.server.getConsoleText();
-
-                btnStart.click(function () {
-                    gameServerHub.server.start();
-                });
-                btnStop.click(function () {
-                    gameServerHub.server.stop();
-                });
-            });
-        });
-    </script>
+    <script src="angular/controllers/server/serverController.js"></script>
 </body>
 </html>

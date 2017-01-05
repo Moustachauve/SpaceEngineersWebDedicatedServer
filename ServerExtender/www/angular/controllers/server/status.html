@@ -1,0 +1,15 @@
+﻿<div ng-init="initStatusPage()">
+
+    The server is currently {{serverStatus}}.
+
+    <button ng-click="refreshStatus()">Refresh</button>
+    <button ng-click="startServer()">Start</button>
+    <button disabled>Stop</button>
+
+    <h3>Console</h3>
+    <pre id="console" ng-click="focusCommand()" style="background-color:#222; color: #fafafa; min-height: 100px; height:300px; width: 100%; padding: 20px; resize:vertical; overflow: auto; overflow-y:scroll;">{{consoleLog}}</pre>
+    <form ng-submit="executeCommand()">
+        <input type="text" ng-model="command" id="consoleCommand" />
+        <button ng-click="">Send</button>
+    </form>
+</div>

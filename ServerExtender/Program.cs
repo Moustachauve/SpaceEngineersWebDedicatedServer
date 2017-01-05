@@ -5,16 +5,16 @@ using GameServer;
 
 namespace ServerExtender
 {
-    class Program
-    {
-        const string CONTENT_PATH = @"E:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers";
-        
+	class Program
+	{
+		const string CONTENT_PATH = @"E:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers";
 
-        [STAThread]
-        static void Main(string[] args)
-        {
-            Console.SetOut(ConsoleHandler.Instance);
-            Console.WriteLine("Initializing...");
+
+		[STAThread]
+		static void Main(string[] args)
+		{
+			Console.SetOut(ConsoleHandler.Instance);
+			Console.WriteLine("Initializing...");
 
 			WebServer webServer = new WebServer();
 			webServer.Start();
@@ -22,11 +22,19 @@ namespace ServerExtender
 			Console.WriteLine("Server started.");
 
 
-            Console.ReadLine();
+			Console.WriteLine("Type 'quit' to exit the server.");
+			while (ConsoleHandler.Instance.StayOpen)
+			{
+				string command = Console.ReadLine();
+				ConsoleHandler.Instance.ExecuteCommand("[CONSOLE]", command);
+			}
 
+			Console.WriteLine("Cleaning Game server...");
+			DedicatedGameServer.Clean();
 
-            DedicatedGameServer.Clean();
+			Console.WriteLine("Closing the webserver...");
+			webServer.Stop();
 		}
 
-    }
+	}
 }

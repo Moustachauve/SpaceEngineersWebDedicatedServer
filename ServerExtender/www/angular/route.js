@@ -4,18 +4,18 @@
 
         $routeProvider
 
-         /*.when('/', {
-             title: "Home",
-             templateUrl: '/controllers/leaderboard/mainPage.html',
-             controller: 'leaderboardController',
-         })*/
+         .when('/', {
+             title: "Server Info",
+             templateUrl: 'angular/controllers/server/status.html',
+             controller: 'serverController',
+         })
 
         // = Errors =
 
         .otherwise({
             title: "Page not found",
-            templateUrl: 'controllers/error/404.html',
-            controller: 'Error404Controller'
+            templateUrl: 'angular/controllers/error/404.html',
+            controller: 'errorController'
         });
 
         $locationProvider.html5Mode(true);

@@ -13,5 +13,10 @@ namespace ServerExtender.Hubs
 		{
 			Clients.Caller.consoleReplace(ConsoleHandler.Instance.Log);
 		}
+
+		public void ExecuteCommand(string command)
+		{
+			ConsoleHandler.Instance.ExecuteCommand("[WEB:" + Context.ConnectionId + "]", command);
+		}
 	}
 }
