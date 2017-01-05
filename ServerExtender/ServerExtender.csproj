@@ -152,6 +152,21 @@
     <Content Include="www\angular\controllers\error\errorController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\angular\controllers\server\serverController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\controllers\server\status.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\Services\consoleHubService.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\Services\serverHubService.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\js\lib\angular-route.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\js\lib\angular.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -162,6 +177,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\angular\route.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\js\lib\signalr-hub.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="www\index.html">
