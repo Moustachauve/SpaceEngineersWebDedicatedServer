@@ -132,7 +132,6 @@
   <ItemGroup>
     <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Controller\DefaultController.cs" />
-    <Compile Include="Controller\ServerController.cs" />
     <Compile Include="Hubs\ConsoleHub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +145,8 @@
     <Content Include="www\angular\application.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\angular\controllers\entities\entitiesController.js" />
+    <Content Include="www\angular\controllers\entities\entitiesList.html" />
     <Content Include="www\angular\controllers\error\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

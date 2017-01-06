@@ -151,6 +151,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\ServerStatusChangedArgs.cs" />
+    <Compile Include="ServerStatus.cs" />
     <Compile Include="Hubs\ServerHub.cs" />
     <Compile Include="DedicatedGameServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

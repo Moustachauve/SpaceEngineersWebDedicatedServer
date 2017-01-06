@@ -14,7 +14,7 @@ namespace GameServer.Timers
         public EventHandler StatusChanged;
 
         private Timer timer;
-        private string previousStatus;
+        private ServerStatus previousStatus;
 
         public ServerEvents()
         {
@@ -33,7 +33,7 @@ namespace GameServer.Timers
             if (StatusChanged == null)
                 return;
 
-            string currentStatus = DedicatedGameServer.GetStatus();
+			ServerStatus currentStatus = DedicatedGameServer.Status;
             if (currentStatus != previousStatus)
                 StatusChanged(this, null);
 
@@ -42,7 +42,7 @@ namespace GameServer.Timers
 
 		private void OnServerStatusChanged(object sender, EventArgs args)
 		{
-			GlobalHost.ConnectionManager.GetHubContext<ServerHub>().Clients.All.updateStatus(DedicatedGameServer.GetStatus());
+			GlobalHost.ConnectionManager.GetHubContext<ServerHub>().Clients.All.updateStatus(DedicatedGameServer.Status.ToString());
 		}
 	}
 }

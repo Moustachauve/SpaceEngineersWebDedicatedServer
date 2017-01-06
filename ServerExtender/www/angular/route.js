@@ -9,6 +9,11 @@
              templateUrl: 'angular/controllers/server/status.html',
              controller: 'serverController',
          })
+         .when('/entities', {
+             title: "Entities",
+             templateUrl: 'angular/controllers/entities/entitiesList.html',
+             controller: 'entitiesController',
+         })
 
         // = Errors =
 

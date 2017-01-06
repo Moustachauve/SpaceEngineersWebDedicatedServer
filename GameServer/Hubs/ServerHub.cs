@@ -12,31 +12,17 @@ namespace GameServer.Hubs
 	{
         public void Start()
 		{
-			if (DedicatedGameServer.IsRunning)
-			{
-				//Already started
-				return;
-			}
-
             DedicatedGameServer.Start();
-			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
 		}
 
 		public void Stop()
 		{
-			if (!DedicatedGameServer.IsRunning)
-			{
-				//return "Not started";
-				return;
-			}
-
             DedicatedGameServer.Stop();
-			Clients.All.updateStatus(DedicatedGameServer.GetStatus());
 		}
 
         public void UpdateStatus()
         {
-            Clients.Caller.updateStatus(DedicatedGameServer.GetStatus());
+            Clients.Caller.updateStatus(DedicatedGameServer.Status.ToString());
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿using GameServer.Timers;
+﻿using GameServer.Events;
+using GameServer.Hubs;
+using GameServer.Timers;
+using Microsoft.AspNet.SignalR;
 using Sandbox;
 using Sandbox.Engine.Utils;
 using Sandbox.Game;
+using Sandbox.Game.World;
 using SpaceEngineers.Game;
 using System;
 using System.Collections.Generic;
@@ -19,234 +23,272 @@ using VRageRender;
 
 namespace GameServer
 {
-    public static class DedicatedGameServer
-    {
-        static Thread serverThread;
-        static VRage.Win32.WinApi.ConsoleEventHandler consoleHandler;
+	public static class DedicatedGameServer
+	{
+		public static EventHandler<ServerStatusChangedArgs> ServerStatusChanged;
 
-        private static ServerEvents serverEvents;
-        public static ServerEvents ServerEvents
-        {
-            get
-            {
-                if (serverEvents == null)
-                {
-                    serverEvents = new ServerEvents();
-                }
+		static Thread serverThread;
+		static VRage.Win32.WinApi.ConsoleEventHandler consoleHandler;
 
-                return serverEvents;
-            }
-        }
-        
-        public static bool IsRunning { get; private set; }
-        public static bool IsReady { get { return IsRunning && MySandboxGame.Static != null && MySandboxGame.Static.IsFirstUpdateDone; } }
+		private static bool IsRunning { get; set; }
+		private static bool IsStopping { get; set; }
+		private static bool IsReady { get { return IsRunning && !IsStopping && MySandboxGame.Static != null && MySandboxGame.Static.IsFirstUpdateDone; } }
 
-        public static void Start()
-        {
-            if (IsRunning)
-                return;
+		private static ServerStatus previousStatus;
+		public static ServerStatus Status
+		{
+			get
+			{
+				NotifyStatusChanged();
+				return GetCurrentServerStatus();
+			}
+		}
 
-            IsRunning = true;
-            serverThread = new Thread(RunMain) { IsBackground = true };
-            serverThread.Start();
-        }
+		public static void Start()
+		{
+			if (IsRunning)
+				return;
 
-        public static void Stop()
-        {
-            if (!IsReady)
-                return;
+			IsRunning = true;
+			serverThread = new Thread(RunMain) { IsBackground = true };
+			serverThread.Start();
+			NotifyStatusChanged();
 
-            MySandboxGame.ExitThreadSafe();
-        }
+			//Wait until the server is fully ready
+			System.Threading.SpinWait.SpinUntil(() => IsReady);
+			NotifyStatusChanged();
+		}
 
-        public static string GetStatus()
-        {
-            if (DedicatedGameServer.IsReady)
-            {
-                return "started";
-            }
-            else if (DedicatedGameServer.IsRunning)
-            {
-                return "starting";
-            }
-            else
-            {
-                return "stopped";
-            }
-        }
+		public static void Stop()
+		{
+			if (!IsReady || IsStopping)
+				return;
 
-        public static void Clean()
-        {
-            MyInitializer.InvokeAfterRun();
-        }
+			IsStopping = true;
+			MySandboxGame.ExitThreadSafe();
+			NotifyStatusChanged();
+		}
 
-        private static void StartServer()
-        {
-            try
-            {
-                RunMain();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
+		public static void Clean()
+		{
+			MyInitializer.InvokeAfterRun();
+		}
 
-        private static void RunMain()
-        {
-            MyFileSystem.Reset();
-            SpaceEngineersGame.SetupBasicGameInfo();
-            SpaceEngineersGame.SetupPerGameSettings();
-            MySandboxGame.IsDedicated = true;
+		private static ServerStatus GetCurrentServerStatus()
+		{
+			if (IsReady)
+			{
+				return ServerStatus.Started;
+			}
+			else if (IsStopping)
+			{
+				return ServerStatus.Stopping;
+			}
+			else if (IsRunning)
+			{
+				return ServerStatus.Starting;
+			}
+			else
+			{
+				return ServerStatus.Stopped;
+			}
 
-            MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+		}
 
-            MyPerServerSettings.GameName = MyPerGameSettings.GameName;
-            MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
-            MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
-            MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
+		private static void NotifyStatusChanged()
+		{
+			ServerStatus currentStatus = GetCurrentServerStatus();
+			if (currentStatus == previousStatus)
+				return;
 
-            MySessionComponentExtDebug.ForceDisable = true;
+			ServerStatus oldStatus = previousStatus;
+			previousStatus = currentStatus;
 
-            MyPerServerSettings.AppId = 244850;
+			ServerStatusChanged?.Invoke(null, new ServerStatusChangedArgs(oldStatus, currentStatus));
+			GlobalHost.ConnectionManager.GetHubContext<ServerHub>().Clients.All.updateStatus(currentStatus.ToString());
+		}
 
-            //ConfigForm<MyObjectBuilder_SessionSettings>.LogoImage = SpaceEngineersDedicated.Properties.Resources.SpaceEngineersDSLogo;
-            ConfigForm<MyObjectBuilder_SessionSettings>.GameAttributes = Game.SpaceEngineers;
-            ConfigForm<MyObjectBuilder_SessionSettings>.OnReset = delegate
-            {
-                SpaceEngineersGame.SetupBasicGameInfo();
-                SpaceEngineersGame.SetupPerGameSettings();
-            };
-            MyFinalBuildConstants.APP_VERSION = MyPerGameSettings.BasicGameInfo.GameVersion;
+		private static void StartServer()
+		{
+			try
+			{
+				RunMain();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+		}
 
-            Console.WriteLine("Starting server...");
+		private static void RunMain()
+		{
+			MyFileSystem.Reset();
+			SpaceEngineersGame.SetupBasicGameInfo();
+			SpaceEngineersGame.SetupPerGameSettings();
+			MySandboxGame.IsDedicated = true;
 
+			MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
 
-            MySandboxGame.IsConsoleVisible = true;
-            VRage.Win32.WinApi.AllocConsole();
-            consoleHandler += new VRage.Win32.WinApi.ConsoleEventHandler(Handler);
-            VRage.Win32.WinApi.SetConsoleCtrlHandler(consoleHandler, true);
+			MyPerServerSettings.GameName = MyPerGameSettings.GameName;
+			MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
+			MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
+			MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
 
-            VRage.Service.ExitListenerSTA.OnExit += delegate
-            {
-                if (MySandboxGame.Static != null)
-                    MySandboxGame.Static.Exit();
-            };
+			MySessionComponentExtDebug.ForceDisable = true;
 
-            Console.WriteLine(MyPerServerSettings.GameName + "  " + MyFinalBuildConstants.APP_VERSION_STRING);
-            Console.WriteLine(String.Format("Is official: {0} {1}", MyFinalBuildConstants.IS_OFFICIAL, (MyObfuscation.Enabled ? "[O]" : "[NO]")));
-            Console.WriteLine("Environment.Is64BitProcess: " + Environment.Is64BitProcess);
+			MyPerServerSettings.AppId = 244850;
 
+			//ConfigForm<MyObjectBuilder_SessionSettings>.LogoImage = SpaceEngineersDedicated.Properties.Resources.SpaceEngineersDSLogo;
+			ConfigForm<MyObjectBuilder_SessionSettings>.GameAttributes = Game.SpaceEngineers;
+			ConfigForm<MyObjectBuilder_SessionSettings>.OnReset = delegate
+			{
+				SpaceEngineersGame.SetupBasicGameInfo();
+				SpaceEngineersGame.SetupPerGameSettings();
+			};
+			MyFinalBuildConstants.APP_VERSION = MyPerGameSettings.BasicGameInfo.GameVersion;
 
-            string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), MyPerServerSettings.GameDSName);
-
-            try
-            {
-                Console.WriteLine("Path already initialized, content path: " + MyFileSystem.ContentPath);
-                MySandboxGame.IsReloading = true;
-            }
-            catch (InvalidOperationException)
-            {
-                MyInitializer.InvokeBeforeRun(
-                MyPerServerSettings.AppId,
-                MyPerServerSettings.GameDSName,
-                dataPath, DedicatedServer.AddDateToLog);
-            }
+			Console.WriteLine("Starting game server...");
 
 
-            Console.WriteLine(MySandboxGame.ConfigDedicated.ServerName);
+			MySandboxGame.IsConsoleVisible = true;
+			VRage.Win32.WinApi.AllocConsole();
+			consoleHandler += new VRage.Win32.WinApi.ConsoleEventHandler(Handler);
+			VRage.Win32.WinApi.SetConsoleCtrlHandler(consoleHandler, true);
+
+			VRage.Service.ExitListenerSTA.OnExit += delegate
+			{
+				if (MySandboxGame.Static != null)
+					MySandboxGame.Static.Exit();
+			};
+
+			Console.WriteLine(MyPerServerSettings.GameName + "  " + MyFinalBuildConstants.APP_VERSION_STRING);
+			Console.WriteLine(String.Format("Is official: {0} {1}", MyFinalBuildConstants.IS_OFFICIAL, (MyObfuscation.Enabled ? "[O]" : "[NO]")));
+			Console.WriteLine("Environment.Is64BitProcess: " + Environment.Is64BitProcess);
 
 
-            do
-            {
-                RunInternal();
-            } while (MySandboxGame.IsReloading);
+			string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), MyPerServerSettings.GameDSName);
 
-            IsRunning = false;
-            Console.WriteLine("FirstUpdate: " + MySandboxGame.Static.IsFirstUpdateDone);
-        }
+			try
+			{
+				Console.WriteLine("Path already initialized, content path: " + MyFileSystem.ContentPath);
+				MySandboxGame.IsReloading = true;
+			}
+			catch (InvalidOperationException)
+			{
+				MyInitializer.InvokeBeforeRun(
+				MyPerServerSettings.AppId,
+				MyPerServerSettings.GameDSName,
+				dataPath, DedicatedServer.AddDateToLog);
+			}
 
-        private static void RunInternal()
-        {
-            if (!MySandboxGame.IsReloading)
-                MyFileSystem.InitUserSpecific(null);
+			do
+			{
+				IsRunning = true;
+				RunInternal();
+			}
+			while (MySandboxGame.IsReloading);
+		}
 
-
-            MySandboxGame.IsReloading = false;
-
-            VRageRender.MyRenderProxy.Initialize(MySandboxGame.IsDedicated ? (IMyRender)new MyNullRender() : new MyDX11Render());
-            MyFinalBuildConstants.APP_VERSION = MyPerGameSettings.BasicGameInfo.GameVersion;
-
-            using (MySteamService steamService = new MySteamService(MySandboxGame.IsDedicated, MyPerServerSettings.AppId))
-            {
-                if (!steamService.HasGameServer)
-                {
-                    MyLog.Default.WriteLineAndConsole("Steam service is not running! Please reinstall dedicated server.");
-                    return;
-                }
-
-                VRageGameServices services = new VRageGameServices(steamService);
-
-                using (MySandboxGame game = new MySandboxGame(services, Environment.GetCommandLineArgs().Skip(1).ToArray()))
-                {
-                    VRageRender.MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
-                    VRageRender.MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
-
-                    game.Run();
-                }
-
-                if (MySandboxGame.IsConsoleVisible && !MySandboxGame.IsReloading && !Console.IsInputRedirected)
-                {
-                    Console.WriteLine("Server stopped.");
-                }
-            }
-        }
-
-        private static bool Handler(VRage.Win32.WinApi.CtrlType sig)
-        {
-            switch (sig)
-            {
-                case VRage.Win32.WinApi.CtrlType.CTRL_SHUTDOWN_EVENT:
-                case VRage.Win32.WinApi.CtrlType.CTRL_CLOSE_EVENT:
-                    {
-                        MySandboxGame.Static.Exit();
-                        return false;
-                    }
-                default:
-                    break;
-            }
-            return true;
-        }
+		private static void RunInternal()
+		{
+			if (!MySandboxGame.IsReloading)
+				MyFileSystem.InitUserSpecific(null);
 
 
-        public static bool GameAction(Action action)
-        {
-            if (serverThread == Thread.CurrentThread)
-                throw new ThreadStateException("Invoking action on game thread from inside game thread! This will freeze the server!");
+			MySandboxGame.IsReloading = false;
 
-            try
-            {
-                AutoResetEvent e = new AutoResetEvent(false);
+			MyRenderProxy.Initialize(MySandboxGame.IsDedicated ? (IMyRender)new MyNullRender() : new MyDX11Render());
+			MyFinalBuildConstants.APP_VERSION = MyPerGameSettings.BasicGameInfo.GameVersion;
 
-                MySandboxGame.Static.Invoke(() =>
-                {
-                    /*if (m_gameThread == null)
+			using (MySteamService steamService = new MySteamService(MySandboxGame.IsDedicated, MyPerServerSettings.AppId))
+			{
+				bool startGame = true;
+
+				if (!steamService.HasGameServer)
+				{
+					MyLog.Default.WriteLineAndConsole("Steam service is not running! Please reinstall dedicated server.");
+					startGame = false;
+				}
+
+				if (startGame)
+				{
+					VRageGameServices services = new VRageGameServices(steamService);
+
+					using (MySandboxGame game = new MySandboxGame(services, Environment.GetCommandLineArgs().Skip(1).ToArray()))
+					{
+						MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
+						MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
+
+						game.OnGameLoaded += Game_OnGameLoaded;
+
+						game.Run();
+					}
+				}
+
+				IsRunning = false;
+				IsStopping = false;
+				NotifyStatusChanged();
+
+				if (MySandboxGame.IsConsoleVisible && !MySandboxGame.IsReloading && !Console.IsInputRedirected)
+				{
+					Console.WriteLine("Server stopped.");
+				}
+			}
+		}
+
+		private static void Game_OnGameLoaded(object sender, EventArgs e)
+		{
+			// When game is almost ready, we start checking the console output to see if the game has started
+			// We need to find a better way of doing this with a game event or something else
+
+		}
+
+		private static bool Handler(VRage.Win32.WinApi.CtrlType sig)
+		{
+			switch (sig)
+			{
+				case VRage.Win32.WinApi.CtrlType.CTRL_SHUTDOWN_EVENT:
+				case VRage.Win32.WinApi.CtrlType.CTRL_CLOSE_EVENT:
+					{
+						MySandboxGame.Static.Exit();
+						return false;
+					}
+				default:
+					break;
+			}
+			return true;
+		}
+
+
+		public static bool GameAction(Action action)
+		{
+			if (serverThread == Thread.CurrentThread)
+				throw new ThreadStateException("Invoking action on game thread from inside game thread! This will freeze the server!");
+
+			try
+			{
+				AutoResetEvent e = new AutoResetEvent(false);
+
+				MySandboxGame.Static.Invoke(() =>
+				{
+					/*if (m_gameThread == null)
 					{
 						m_gameThread = Thread.CurrentThread;
 					}*/
 
-                    action();
-                    e.Set();
-                });
+					action();
+					e.Set();
+				});
 
-                e.WaitOne();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
-    }
+				e.WaitOne();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+				return false;
+			}
+		}
+
+	}
 }
