@@ -21,7 +21,17 @@
 </head>
 <body>
 
-    <div class="container" ng-view></div>
+    <div>
+        <h3>Menu</h3>
+        <a href="/">Server Status</a>
+        <a href="/server/config">Server Configuration</a>
+        <a href="/entities">Entities</a>
+    </div>
+
+    <div>
+        <h3>Page</h3>
+        <div class="container" ng-view></div>
+    </div>
 
     <script src="js/lib/jquery.signalR.min.js"></script>
     <script src="http://localhost:9000/signalr/hubs"></script>
@@ -31,9 +41,11 @@
     <script src="angular/application.js"></script>
     <script src="angular/Services/serverHubService.js"></script>
     <script src="angular/Services/consoleHubService.js"></script>
+    <script src="angular/Services/serverConfigHubService.js"></script>
     <script src="angular/route.js"></script>
     <script src="angular/controllers/error/errorController.js"></script>
     <script src="angular/controllers/server/serverController.js"></script>
     <script src="angular/controllers/entities/entitiesController.js"></script>
+    <script src="angular/controllers/serverConfig/serverConfigController.js"></script>
 </body>
 </html>

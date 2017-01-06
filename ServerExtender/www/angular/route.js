@@ -7,12 +7,17 @@
          .when('/', {
              title: "Server Info",
              templateUrl: 'angular/controllers/server/status.html',
-             controller: 'serverController',
+             controller: 'serverController'
          })
          .when('/entities', {
              title: "Entities",
              templateUrl: 'angular/controllers/entities/entitiesList.html',
-             controller: 'entitiesController',
+             controller: 'entitiesController'
+         })
+         .when('/server/config', {
+             title: "Server Configuration",
+             templateUrl: 'angular/controllers/serverConfig/serverConfigEdit.html',
+             controller: 'serverConfigController'
          })
 
         // = Errors =

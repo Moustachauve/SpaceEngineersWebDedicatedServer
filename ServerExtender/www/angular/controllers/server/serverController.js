@@ -26,24 +26,24 @@ function errorController($scope, $rootScope, serverHubService, consoleHubService
 
     $scope.refreshStatus = function () {
         serverHubService.updateStatus();
-    }
+    };
 
     $scope.startServer = function () {
         serverHubService.startServer();
-    }
+    };
 
     $scope.stopServer = function () {
         serverHubService.stopServer();
-    }
+    };
 
     $scope.executeCommand = function () {
         console.log("executeCommand: " + $scope.command);
         consoleHubService.executeCommand($scope.command);
         $scope.command = '';
         $scope.focusCommand();
-    }
+    };
 
-    $scope.focusCommand = function() {
+    $scope.focusCommand = function () {
         $('#consoleCommand').focus();
-    }
+    };
 }

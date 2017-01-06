@@ -153,6 +153,12 @@
     <Content Include="www\angular\controllers\error\errorController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\angular\controllers\serverConfig\serverConfigController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\controllers\serverConfig\serverConfigEdit.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\angular\controllers\server\serverController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -161,6 +167,9 @@
     </Content>
     <Content Include="www\angular\Services\consoleHubService.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\Services\serverConfigHubService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\angular\Services\serverHubService.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

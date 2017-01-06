@@ -26,6 +26,7 @@ namespace GameServer
 	public static class DedicatedGameServer
 	{
 		public static EventHandler<ServerStatusChangedArgs> ServerStatusChanged;
+		public static EventHandler<ServerConfigChangedArgs> ServerConfigChanged;
 
 		static Thread serverThread;
 		static VRage.Win32.WinApi.ConsoleEventHandler consoleHandler;
@@ -33,6 +34,8 @@ namespace GameServer
 		private static bool IsRunning { get; set; }
 		private static bool IsStopping { get; set; }
 		private static bool IsReady { get { return IsRunning && !IsStopping && MySandboxGame.Static != null && MySandboxGame.Static.IsFirstUpdateDone; } }
+
+		public static string SavePath { get; private set; }
 
 		private static ServerStatus previousStatus;
 		public static ServerStatus Status
@@ -42,6 +45,41 @@ namespace GameServer
 				NotifyStatusChanged();
 				return GetCurrentServerStatus();
 			}
+		}
+
+		private static MyConfigDedicated<MyObjectBuilder_SessionSettings> serverConfig;
+		public static MyConfigDedicated<MyObjectBuilder_SessionSettings> ServerConfig
+		{
+			get
+			{
+				if (serverConfig == null)
+				{
+					ReloadServerConfig();
+				}
+
+				return serverConfig;
+			}
+		}
+
+		static DedicatedGameServer()
+		{
+			MyFileSystem.Reset();
+			SpaceEngineersGame.SetupBasicGameInfo();
+			SpaceEngineersGame.SetupPerGameSettings();
+			MySandboxGame.IsDedicated = true;
+
+			MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
+
+			MyPerServerSettings.GameName = MyPerGameSettings.GameName;
+			MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
+			MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
+			MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
+
+			MySessionComponentExtDebug.ForceDisable = true;
+
+			MyPerServerSettings.AppId = 244850;
+
+			SavePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), MyPerServerSettings.GameDSName);
 		}
 
 		public static void Start()
@@ -122,22 +160,6 @@ namespace GameServer
 
 		private static void RunMain()
 		{
-			MyFileSystem.Reset();
-			SpaceEngineersGame.SetupBasicGameInfo();
-			SpaceEngineersGame.SetupPerGameSettings();
-			MySandboxGame.IsDedicated = true;
-
-			MyPerGameSettings.SendLogToKeen = DedicatedServer.SendLogToKeen;
-
-			MyPerServerSettings.GameName = MyPerGameSettings.GameName;
-			MyPerServerSettings.GameNameSafe = MyPerGameSettings.GameNameSafe;
-			MyPerServerSettings.GameDSName = MyPerServerSettings.GameNameSafe + "Dedicated";
-			MyPerServerSettings.GameDSDescription = "Your place for space engineering, destruction and exploring.";
-
-			MySessionComponentExtDebug.ForceDisable = true;
-
-			MyPerServerSettings.AppId = 244850;
-
 			//ConfigForm<MyObjectBuilder_SessionSettings>.LogoImage = SpaceEngineersDedicated.Properties.Resources.SpaceEngineersDSLogo;
 			ConfigForm<MyObjectBuilder_SessionSettings>.GameAttributes = Game.SpaceEngineers;
 			ConfigForm<MyObjectBuilder_SessionSettings>.OnReset = delegate
@@ -165,9 +187,6 @@ namespace GameServer
 			Console.WriteLine(String.Format("Is official: {0} {1}", MyFinalBuildConstants.IS_OFFICIAL, (MyObfuscation.Enabled ? "[O]" : "[NO]")));
 			Console.WriteLine("Environment.Is64BitProcess: " + Environment.Is64BitProcess);
 
-
-			string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), MyPerServerSettings.GameDSName);
-
 			try
 			{
 				Console.WriteLine("Path already initialized, content path: " + MyFileSystem.ContentPath);
@@ -178,7 +197,7 @@ namespace GameServer
 				MyInitializer.InvokeBeforeRun(
 				MyPerServerSettings.AppId,
 				MyPerServerSettings.GameDSName,
-				dataPath, DedicatedServer.AddDateToLog);
+				SavePath, DedicatedServer.AddDateToLog);
 			}
 
 			do
@@ -219,8 +238,6 @@ namespace GameServer
 						MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
 						MyRenderProxy.GetRenderProfiler().EndProfilingBlock();
 
-						game.OnGameLoaded += Game_OnGameLoaded;
-
 						game.Run();
 					}
 				}
@@ -236,28 +253,6 @@ namespace GameServer
 			}
 		}
 
-		private static void Game_OnGameLoaded(object sender, EventArgs e)
-		{
-			// When game is almost ready, we start checking the console output to see if the game has started
-			// We need to find a better way of doing this with a game event or something else
-
-		}
-
-		private static bool Handler(VRage.Win32.WinApi.CtrlType sig)
-		{
-			switch (sig)
-			{
-				case VRage.Win32.WinApi.CtrlType.CTRL_SHUTDOWN_EVENT:
-				case VRage.Win32.WinApi.CtrlType.CTRL_CLOSE_EVENT:
-					{
-						MySandboxGame.Static.Exit();
-						return false;
-					}
-				default:
-					break;
-			}
-			return true;
-		}
 
 
 		public static bool GameAction(Action action)
@@ -288,6 +283,46 @@ namespace GameServer
 				Console.WriteLine(ex);
 				return false;
 			}
+		}
+
+		public static MyConfigDedicated<MyObjectBuilder_SessionSettings> ReloadServerConfig()
+		{
+			string configFilePath = Path.Combine(SavePath, "SpaceEngineers-Dedicated.cfg");
+			if (File.Exists(configFilePath))
+			{
+				MyConfigDedicated<MyObjectBuilder_SessionSettings> config = new MyConfigDedicated<MyObjectBuilder_SessionSettings>("SpaceEngineers-Dedicated.cfg");
+				if (config == null)
+					throw new FileLoadException("Failed to load server config at \"" + configFilePath + "\"");
+
+				serverConfig = config;
+
+				//Maybe we should check if the file really did changed?
+				ServerConfigChanged?.Invoke(null, new ServerConfigChangedArgs(config));
+
+				return config;
+			}
+			else
+			{
+				Console.WriteLine("Server config not found at \"" + configFilePath + "\"");
+			}
+
+			return null;
+		}
+
+		private static bool Handler(VRage.Win32.WinApi.CtrlType sig)
+		{
+			switch (sig)
+			{
+				case VRage.Win32.WinApi.CtrlType.CTRL_SHUTDOWN_EVENT:
+				case VRage.Win32.WinApi.CtrlType.CTRL_CLOSE_EVENT:
+					{
+						MySandboxGame.Static.Exit();
+						return false;
+					}
+				default:
+					break;
+			}
+			return true;
 		}
 
 	}

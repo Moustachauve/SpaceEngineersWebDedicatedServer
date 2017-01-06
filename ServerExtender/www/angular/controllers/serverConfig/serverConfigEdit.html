@@ -1,0 +1,32 @@
+﻿<table>
+    <tr ng-repeat="(key, value) in serverConfig" ng-include="'categoryTree'">
+        
+    </tr>
+</table>
+
+
+<script type="text/ng-template" id="categoryTree">
+    <td class="key"><label>{{key}}</label></td>
+    <td>
+        <table ng-if="getType(value) === 'object'">
+            <tr ng-repeat="(key, value) in value" ng-include="'categoryTree'">
+                
+            </tr>
+        </table>
+
+        <textarea ng-if="getType(value) === 'array'"></textarea>
+
+        <input ng-model="serverConfig[key]" ng-if="getType(value) !== 'object' && getType(value) !== 'array'" />
+    </td>
+</script>
+
+<style>
+    table {
+        margin-top: 10px;
+        margin-bottom: 25px;
+        border: 1px solid;
+    }
+    .key {
+        vertical-align:top;
+    }
+</style>
