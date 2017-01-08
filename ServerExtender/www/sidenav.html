@@ -1,0 +1,33 @@
+﻿<md-sidenav class="md-sidenav-left"
+            md-component-id="side"
+            md-is-locked-open="$mdMedia('gt-md')"
+            md-whiteframe="4"
+            flex>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+            <h2>
+                <span>Side Panel</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideMenu()" hide-gt-md>
+                <md-icon class="material-icons">&#xE5CD;</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-list>
+            <md-subheader class="md-no-sticky">Server</md-subheader>
+
+            <md-list-item ng-href="/" ng-click="closeSideMenu()">
+                <p>Status</p>
+            </md-list-item>
+            <md-list-item ng-href="/server/config" ng-click="closeSideMenu()">
+                <p>Server Configuration</p>
+            </md-list-item>
+            <md-list-item ng-href="/entities" ng-click="closeSideMenu()">
+                <p>Entities</p>
+            </md-list-item>
+
+        </md-list>
+    </md-content>
+</md-sidenav>

@@ -42,7 +42,7 @@ namespace ServerExtender
 				name: "Fallback",
 				routeTemplate: "{name}/{*other}",
 				defaults: new { controller = "Default", action = "Index" },
-				constraints: new { name = "^(?!(api|angular|css|fonts|img|js)$).*$" }
+				constraints: new { name = "^(?!(api|angular|css|fonts|img|js|favicon.ico)$).*$" }
 			);
 
 			appBuilder.UseCors(CorsOptions.AllowAll);
@@ -61,7 +61,7 @@ namespace ServerExtender
 			options.DefaultFilesOptions.DefaultFileNames = new[]
 			{
 				"index.html"
-			};
+            };
 
 			config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
 			config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;

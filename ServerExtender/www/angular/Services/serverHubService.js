@@ -54,6 +54,10 @@
         service.stopServer = function () {
             hub.stop();
         };
+
+        service.isConnected = function () {
+            return hub.connection.state == $.signalR.connectionState.connected;
+        };
         
         return service;
     }]);

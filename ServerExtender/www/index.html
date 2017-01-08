@@ -1,51 +1,50 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" ng-app="ServerExtender" ng-controller="applicationController">
+<html ng-app="ServerExtender" ng-controller="applicationController">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
     <base href="/">
 
     <title>{{pageTitle}} - Space Engineers Dedicated Server</title>
 
-    <script src="js/lib/jquery.min.js"></script>
-    <script src="js/lib/angular.min.js"></script>
-    <style>
-        html {
-            box-sizing: border-box;
-        }
-
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/angular-material.min.css">
+    <link href="font/material-icons/material-icons.css" rel="stylesheet" />
 </head>
-<body>
+<body ng-cloak layout="column">
+    <ng-include src="'toolbar.html'"></ng-include>
 
-    <div>
-        <h3>Menu</h3>
-        <a href="/">Server Status</a>
-        <a href="/server/config">Server Configuration</a>
-        <a href="/entities">Entities</a>
-    </div>
+    <section layout="row" flex>
+        <ng-include src="'sidenav.html'" layout="column"></ng-include>
 
-    <div>
-        <h3>Page</h3>
-        <div class="container" ng-view></div>
-    </div>
+        <md-content flex layout-padding>
+            <div layout="column" layout-align="top center" ng-view></div>
 
-    <script src="js/lib/jquery.signalR.min.js"></script>
+            <div flex></div>
+        </md-content>
+    </section>
+
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/angular.min.js"></script>
+    <script src="/js/lib/angular-animate.min.js"></script>
+    <script src="/js/lib/angular-aria.min.js"></script>
+    <script src="/js/lib/angular-messages.min.js"></script>
+    <script src="/js/lib/angular-route.min.js"></script>
+
+    <script src="/js/lib/angular-material.min.js"></script>
+
+    <script src="/js/lib/jquery.signalR.min.js"></script>
     <script src="http://localhost:9000/signalr/hubs"></script>
+    <script src="/js/lib/signalr-hub.min.js"></script>
 
-    <script src="js/lib/angular-route.min.js"></script>
-    <script src="js/lib/signalr-hub.min.js"></script>
-    <script src="angular/application.js"></script>
-    <script src="angular/Services/serverHubService.js"></script>
-    <script src="angular/Services/consoleHubService.js"></script>
-    <script src="angular/Services/serverConfigHubService.js"></script>
-    <script src="angular/route.js"></script>
-    <script src="angular/controllers/error/errorController.js"></script>
-    <script src="angular/controllers/server/serverController.js"></script>
-    <script src="angular/controllers/entities/entitiesController.js"></script>
-    <script src="angular/controllers/serverConfig/serverConfigController.js"></script>
+    <script src="/angular/application.js"></script>
+    <script src="/angular/route.js"></script>
+    <script src="/angular/Services/serverHubService.js"></script>
+    <script src="/angular/Services/consoleHubService.js"></script>
+    <script src="/angular/Services/serverConfigHubService.js"></script>
+    <script src="/angular/controllers/error/errorController.js"></script>
+    <script src="/angular/controllers/server/serverController.js"></script>
+    <script src="/angular/controllers/entities/entitiesController.js"></script>
+    <script src="/angular/controllers/serverConfig/serverConfigController.js"></script>
 </body>
 </html>

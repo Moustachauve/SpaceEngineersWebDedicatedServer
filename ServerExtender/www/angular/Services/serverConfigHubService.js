@@ -53,7 +53,7 @@
         };
 
         service.isConnected = function () {
-            return isConnected;
+            return hub.connection.state == $.signalR.connectionState.connected;
         };
 
         return service;

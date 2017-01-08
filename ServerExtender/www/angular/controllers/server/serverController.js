@@ -24,6 +24,14 @@ function errorController($scope, $rootScope, serverHubService, consoleHubService
         $('#console').scrollTop($('#console')[0].scrollHeight);
     });
 
+    if (serverHubService.isConnected()) {
+        serverHubService.updateStatus();
+    }
+    if (consoleHubService.isConnected()) {
+        consoleHubService.getConsoleText();
+    }
+
+
     $scope.refreshStatus = function () {
         serverHubService.updateStatus();
     };
