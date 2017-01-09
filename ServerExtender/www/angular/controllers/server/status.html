@@ -1,15 +1,26 @@
-﻿<div ng-init="initStatusPage()">
+﻿<md-card flex="none">
+    <md-card-title>
+        The server is currently {{serverStatus}}.
+    </md-card-title>
 
-    The server is currently {{serverStatus}}.
+    <md-card-actions layout="row" layout-align="end center" flex>
+        <md-button ng-click="refreshStatus()">Refresh</md-button>
+        <md-button ng-click="startServer()" ng-disabled="serverStatus == 'Starting' || serverStatus == 'Started'">Start</md-button>
+        <md-button ng-click="startServer()" ng-disabled="serverStatus != 'Starting' && serverStatus != 'Started'">Stop</md-button>
+    </md-card-actions>
+</md-card>
 
-    <button ng-click="refreshStatus()">Refresh</button>
-    <button ng-click="startServer()" ng-disabled="serverStatus == 'Starting' || serverStatus == 'Started'">Start</button>
-    <button ng-click="stopServer()" ng-disabled="serverStatus != 'Starting' && serverStatus != 'Started'">Stop</button>
+<md-card md-theme="dark-grey" flex>
+    <md-card-title flex="none">Console</md-card-title>
+    <md-card-content flex="100" id="console">
+        <div ng-click="focusCommand()">
+            <pre>{{consoleLog}}</pre>
 
-    <h3>Console</h3>
-    <pre id="console" ng-click="focusCommand()" style="background-color:#222; color: #fafafa; min-height: 100px; height:300px; width: 100%; padding: 20px; resize:vertical; overflow: auto; overflow-y:scroll;">{{consoleLog}}</pre>
-    <form ng-submit="executeCommand()">
-        <input type="text" ng-model="command" id="consoleCommand" />
-        <button ng-click="">Send</button>
-    </form>
-</div>
+            <form ng-submit="executeCommand()" flex layout="row">
+                <input ng-model="command" id="consoleCommand" style="">
+
+                <div id="caret">>{{command}}</div>
+            </form>           
+        </div>
+    </md-card-content>
+</md-card>

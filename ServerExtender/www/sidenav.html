@@ -1,15 +1,15 @@
 ﻿<md-sidenav class="md-sidenav-left"
             md-component-id="side"
-            md-is-locked-open="$mdMedia('gt-md')"
+            md-is-locked-open="$mdMedia('gt-sm')"
             md-whiteframe="4"
             flex>
-    <md-toolbar layout="row">
+    <md-toolbar layout="row" hide-gt-sm>
         <div class="md-toolbar-tools">
             <h2>
-                <span>Side Panel</span>
+                <span>Main Menu</span>
             </h2>
             <span flex></span>
-            <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideMenu()" hide-gt-md>
+            <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideMenu()">
                 <md-icon class="material-icons">&#xE5CD;</md-icon>
             </md-button>
         </div>

@@ -6,10 +6,11 @@
     <meta charset="utf-8" />
     <base href="/">
 
-    <title>{{pageTitle}} - Space Engineers Dedicated Server</title>
+    <title ng-bind="pageTitle">Space Engineers Dedicated Server</title>
 
     <link rel="stylesheet" href="/css/angular-material.min.css">
     <link href="font/material-icons/material-icons.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
 </head>
 <body ng-cloak layout="column">
     <ng-include src="'toolbar.html'"></ng-include>
@@ -17,10 +18,8 @@
     <section layout="row" flex>
         <ng-include src="'sidenav.html'" layout="column"></ng-include>
 
-        <md-content flex layout-padding>
-            <div layout="column" layout-align="top center" ng-view></div>
-
-            <div flex></div>
+        <md-content flex layout-padding layout="column">
+            <div layout="column" ng-view flex></div>
         </md-content>
     </section>
 

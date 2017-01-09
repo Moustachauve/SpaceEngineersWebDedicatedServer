@@ -5,7 +5,7 @@
         $routeProvider
 
          .when('/', {
-             title: "Server Info",
+             title: "Server Status",
              templateUrl: 'angular/controllers/server/status.html',
              controller: 'serverController'
          })
