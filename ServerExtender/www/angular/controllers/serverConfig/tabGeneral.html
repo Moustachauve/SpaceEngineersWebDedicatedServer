@@ -1,0 +1,72 @@
+﻿<md-tab id="tabGeneral">
+    <md-tab-label>General</md-tab-label>
+    <md-tab-body>
+        <form name="tabGeneral" class="md-padding">
+            <div layout="row" layout-wrap>
+                <md-input-container class="md-block" flex-gt-sm="30" flex="60">
+                    <label>Listen IP</label>
+                    <input ng-model="serverConfig.IP" name="listenIP" type="text" required ng-disabled="formDisabled" />
+                    <div ng-messages="tabGeneral.listenIP.$error">
+                        <div ng-message="required">Please enter an IP address (0.0.0.0 for All).</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="20" flex="40">
+                    <label>Server Port</label>
+                    <input ng-model="serverConfig.ServerPort" name="serverPort" type="number" required min="1" max="65535" ng-disabled="formDisabled" />
+                    <div ng-messages="tabGeneral.serverPort.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="min">Port must be at least 1.</div>
+                        <div ng-message="max">Port must be lower than 65536.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm flex>
+                    <label>Steam Group ID</label>
+                    <input ng-model="serverConfig.GroupID" type="number" ng-disabled="formDisabled" />
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Server Name</label>
+                    <input ng-model="serverConfig.ServerName" type="text" ng-disabled="formDisabled" />
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>World Name</label>
+                    <input ng-model="serverConfig.WorldName" type="text" ng-disabled="formDisabled" />
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container flex-gt-sm>
+                    <label>Game Mode</label>
+                    <md-select ng-model="serverConfig.SessionSettings.GameMode" ng-disabled="formDisabled">
+                        <md-option ng-repeat="gameMode in gameModes" ng-value="gameMode.value">
+                            {{gameMode.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex-gt-sm>
+                    <label>Environment Hostility</label>
+                    <md-select ng-model="serverConfig.SessionSettings.EnvironmentHostility" ng-disabled="formDisabled">
+                        <md-option ng-repeat="environmentHostility in environmentHostilityValues" ng-value="environmentHostility.value">
+                            {{environmentHostility.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-switch ng-model="serverConfig.PauseGameWhenEmpty" flex-gt-sm ng-disabled="formDisabled">
+                    Pause game when empty
+                </md-switch>
+
+                <md-switch ng-model="serverConfig.IgnoreLastSession" flex-gt-sm ng-disabled="formDisabled">
+                    Ignore last session
+                </md-switch>
+            </div>
+        </form>
+    </md-tab-body>
+</md-tab>

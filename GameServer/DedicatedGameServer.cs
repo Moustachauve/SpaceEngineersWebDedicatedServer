@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using VRage.Dedicated;
 using VRage.FileSystem;
 using VRage.Game;
+using VRage.Game.ModAPI;
 using VRage.Game.SessionComponents;
 using VRage.Utils;
 using VRageRender;
@@ -48,7 +49,7 @@ namespace GameServer
 		}
 
 		private static MyConfigDedicated<MyObjectBuilder_SessionSettings> serverConfig;
-		public static MyConfigDedicated<MyObjectBuilder_SessionSettings> ServerConfig
+		public static IMyConfigDedicated ServerConfig
 		{
 			get
 			{
@@ -290,16 +291,19 @@ namespace GameServer
 			string configFilePath = Path.Combine(SavePath, "SpaceEngineers-Dedicated.cfg");
 			if (File.Exists(configFilePath))
 			{
-				MyConfigDedicated<MyObjectBuilder_SessionSettings> config = new MyConfigDedicated<MyObjectBuilder_SessionSettings>("SpaceEngineers-Dedicated.cfg");
-				if (config == null)
-					throw new FileLoadException("Failed to load server config at \"" + configFilePath + "\"");
+				if (serverConfig == null)
+				{
+					serverConfig = new MyConfigDedicated<MyObjectBuilder_SessionSettings>("SpaceEngineers-Dedicated.cfg");
+					if (serverConfig == null)
+						throw new FileLoadException("Failed to load server config at \"" + configFilePath + "\"");
+				}
 
-				serverConfig = config;
+				serverConfig.Load(configFilePath);
 
 				//Maybe we should check if the file really did changed?
-				ServerConfigChanged?.Invoke(null, new ServerConfigChangedArgs(config));
+				ServerConfigChanged?.Invoke(null, new ServerConfigChangedArgs(serverConfig));
 
-				return config;
+				return serverConfig;
 			}
 			else
 			{

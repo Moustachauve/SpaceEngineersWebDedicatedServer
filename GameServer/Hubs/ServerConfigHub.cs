@@ -16,7 +16,7 @@ namespace GameServer.Hubs
 
 		public void ReloadConfig()
 		{
-			Clients.Caller.replaceConfig(DedicatedGameServer.ReloadServerConfig());
+			Clients.Caller.replaceConfig(/*DedicatedGameServer.ReloadServerConfig()*/);
 		}
 	}
 }

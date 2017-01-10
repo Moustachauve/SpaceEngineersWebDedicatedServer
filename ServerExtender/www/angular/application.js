@@ -1,4 +1,4 @@
-﻿var app = angular.module('ServerExtender', ['ngRoute', 'SignalR', 'ngAria', 'ngAnimate', 'ngMaterial'])
+﻿var app = angular.module('ServerExtender', ['ngRoute', 'SignalR', 'ngAria', 'ngAnimate', 'ngMaterial', 'ngMessages'])
 
 // Set the page title according to the current route
 .run(['$rootScope', '$route', function ($rootScope, $route) {

@@ -159,6 +159,9 @@
     <Content Include="www\angular\controllers\serverConfig\serverConfigEdit.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\angular\controllers\serverConfig\tabGeneral.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\angular\controllers\server\serverController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
