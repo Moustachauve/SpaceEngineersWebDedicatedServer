@@ -16,7 +16,7 @@ namespace ServerExtender.Hubs
 
 		public void ExecuteCommand(string command)
 		{
-			ConsoleHandler.Instance.ExecuteCommand("[WEB:" + Context.ConnectionId + "]", command);
+			ConsoleHandler.Instance.ExecuteCommand("WEB\\" +Context.ConnectionId, command);
 		}
 	}
 }

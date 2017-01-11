@@ -7,79 +7,118 @@ using System.Text;
 
 namespace ServerExtender
 {
-    public class ConsoleHandler : TextWriter
-    {
+	public class ConsoleHandler : TextWriter
+	{
 		const int VK_RETURN = 0x0D;
 		const int WM_KEYDOWN = 0x100;
 
 		private static ConsoleHandler instance;
-        public static ConsoleHandler Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new ConsoleHandler();
-                return instance;
-            }
-        }
+		public static ConsoleHandler Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = new ConsoleHandler();
+				return instance;
+			}
+		}
 
-        public EventHandler<string> WriteEvent;
+		public EventHandler<string> WriteEvent;
 		public bool StayOpen { get; private set; }
 
-        public string Log { get { return consoleLog.ToString(); } }
-        public override Encoding Encoding { get { return new ASCIIEncoding(); } }
+		public string Log { get { return consoleLog.ToString(); } }
+		public override Encoding Encoding { get { return new ASCIIEncoding(); } }
 
-        private TextWriter consoleWriter;
-        private StringBuilder consoleLog;
+		private TextWriter consoleWriter;
+		private StringBuilder consoleLog;
 
 		[DllImport("User32.Dll", EntryPoint = "PostMessageA")]
 		private static extern bool PostMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
 		private ConsoleHandler()
-        {
-            consoleLog = new StringBuilder();
-            consoleWriter = Console.Out;
+		{
+			consoleLog = new StringBuilder();
+			consoleWriter = Console.Out;
 			StayOpen = true;
 		}
 
-        public override void Write(string value)
-        {
-            consoleLog.Append(value);
-            consoleWriter.Write(value);
-            base.Write(value);
+		public void WriteLocal(string value)
+		{
+			consoleWriter.Write(value);
+		}
 
-            WriteEvent?.Invoke(this, value);
-        }
+		public void WriteLineLocal(string value)
+		{
+			WriteLocal(value + NewLine);
+		}
 
-        public override void WriteLine(string value)
-        {
-            consoleLog.AppendLine(value);
-            consoleWriter.WriteLine(value);
-            base.WriteLine(value);
+		public void WriteRemote(string value)
+		{
+			consoleLog.Append(value);
+			GlobalHost.ConnectionManager.GetHubContext<ConsoleHub>().Clients.All.consoleWrite(value);
+			WriteEvent?.Invoke(this, value);
+		}
 
-            GlobalHost.ConnectionManager.GetHubContext<ConsoleHub>().Clients.All.consoleWrite(value + NewLine);
-            WriteEvent?.Invoke(this, value + NewLine);
-        }
+		public void WriteLineRemote(string value)
+		{
+			WriteRemote(value + NewLine);
+		}
+
+		public override void Write(string value)
+		{
+			WriteRemote(value);
+			WriteLocal(value);
+		}
+
+		public override void WriteLine(string value)
+		{
+			this.Write(value + NewLine);
+		}
+
+		public void ClearLineLocal()
+		{
+			Console.SetCursorPosition(0, Console.CursorTop);
+			WriteLocal(new string(' ', Console.WindowWidth));
+			Console.SetCursorPosition(0, Console.CursorTop - (Console.WindowWidth >= Console.BufferWidth ? 1 : 0));
+		}
 
 		public void ExecuteCommand(string sender, string value)
 		{
-			if(string.IsNullOrWhiteSpace(value))
+			if (string.IsNullOrWhiteSpace(value))
 			{
 				return;
 			}
 
-			WriteLine(sender + "->" + value);
-
-			if(value == "quit")
+			if (sender == "Console")
 			{
-				StayOpen = false;
-				//Cancel any Console.Read* that might be running
-				var hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
-				PostMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0);
-				return;
+				WriteLineRemote(sender + ">" + value);
+			}
+			else
+			{
+				ClearLineLocal();
+				WriteLine(sender + ">" + value);
 			}
 
-			WriteLine("Command not found");
+			switch (value)
+			{
+				case "ping":
+					WriteLine("Pong!");
+					break;
+				case "quit":
+					StayOpen = false;
+					//Cancel any Console.Read* that might be running
+					var hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+					PostMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0);
+					return;
+				default:
+					WriteLine("Command not found");
+					break;
+			}
+
+			if (sender != "Console")
+			{
+				WriteLocal("Console>");
+			}
 		}
 	}
 }

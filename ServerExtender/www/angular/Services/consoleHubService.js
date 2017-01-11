@@ -56,5 +56,9 @@
             return hub.connection.state == $.signalR.connectionState.connected;
         };
 
+        service.getConnectionId = function () {
+            return hub.connection.id;
+        }
+
         return service;
     }]);

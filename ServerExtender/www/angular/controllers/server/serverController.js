@@ -1,11 +1,17 @@
 ﻿angular
     .module('ServerExtender')
-    .controller('serverController', ['$scope', '$rootScope', 'serverHubService', 'consoleHubService', errorController]);
+    .controller('serverController', ['$scope', '$rootScope', '$timeout', 'serverHubService', 'consoleHubService', errorController]);
 
-function errorController($scope, $rootScope, serverHubService, consoleHubService) {
+function errorController($scope, $rootScope, $timeout, serverHubService, consoleHubService) {
+
+    var commandHistory = [];
+    var commandHistoryIndex = 0;
+    var commandPreviousCharCount = 0;
 
     $scope.serverStatus = '';
     $scope.consoleLog = '';
+    $scope.command = '';
+    $scope.connectionId = '';
 
     $rootScope.$on('serverHub:updateStatus', function (event, status) {
         $scope.serverStatus = status;
@@ -14,14 +20,15 @@ function errorController($scope, $rootScope, serverHubService, consoleHubService
 
     $rootScope.$on('consoleHub:consoleReplace', function (event, consoleLog) {
         $scope.consoleLog = consoleLog;
+        $scope.connectionId = consoleHubService.getConnectionId();
         $scope.$apply();
-        $('#console').scrollTop($('#console')[0].scrollHeight);
+        scrollDownConsole();
     });
 
     $rootScope.$on('consoleHub:consoleWrite', function (event, consoleLog) {
         $scope.consoleLog += consoleLog;
         $scope.$apply();
-        $('#console').scrollTop($('#console')[0].scrollHeight);
+        scrollDownConsole();
     });
 
     if (serverHubService.isConnected()) {
@@ -45,8 +52,17 @@ function errorController($scope, $rootScope, serverHubService, consoleHubService
     };
 
     $scope.executeCommand = function () {
+        if (!$scope.command.trim()) {
+            $scope.consoleLog += ">\n";
+            $scope.command = '';
+            $timeout(scrollDownConsole, 0, false);
+            
+            return;
+        }
         console.log("executeCommand: " + $scope.command);
         consoleHubService.executeCommand($scope.command);
+        commandHistory.unshift($scope.command)
+        commandHistoryIndex = 0;
         $scope.command = '';
         $scope.focusCommand();
     };
@@ -54,4 +70,26 @@ function errorController($scope, $rootScope, serverHubService, consoleHubService
     $scope.focusCommand = function () {
         $('#consoleCommand').focus();
     };
+
+    $scope.keyDownConsole = function ($event) {
+        if ($event.keyCode == 38) { // up
+            if (commandHistoryIndex + 1 <= commandHistory.length) {
+                $scope.command = commandHistory[commandHistoryIndex];
+                commandHistoryIndex++;
+            }
+        }
+        else if ($event.keyCode == 40) {// down
+            if (commandHistoryIndex > 0) {
+                $scope.command = commandHistory[commandHistoryIndex];
+                commandHistoryIndex--;
+            }
+            else {
+                $scope.command = '';
+            }
+        }
+    }
+
+    var scrollDownConsole = function () {
+        $('#console').scrollTop($('#console')[0].scrollHeight);
+    }
 }

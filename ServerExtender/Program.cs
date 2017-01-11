@@ -25,8 +25,9 @@ namespace ServerExtender
 			Console.WriteLine("Type 'quit' to exit the server.");
 			while (ConsoleHandler.Instance.StayOpen)
 			{
+				ConsoleHandler.Instance.WriteLocal("Console>");
 				string command = Console.ReadLine();
-				ConsoleHandler.Instance.ExecuteCommand("[CONSOLE]", command);
+				ConsoleHandler.Instance.ExecuteCommand("Console", command);
 			}
 
 			Console.WriteLine("Cleaning Game server...");

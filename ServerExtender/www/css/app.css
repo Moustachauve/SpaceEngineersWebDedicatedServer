@@ -5,6 +5,13 @@
 
 #console {
     overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#console pre {
+    word-break: break-all;
+    white-space:pre-line;
+
 }
 
     #console form {
@@ -12,23 +19,18 @@
         font-family: monospace;
     }
 
+    #console form span {
+        white-space: nowrap; 
+    }
+
     #console #consoleCommand {
-        position: absolute;
-        left: -99999px;
-        width: 0px;
-        height: 0px;
+        font-family: monospace;
+        width: 100%;
         background: 0;
         border: 0;
         color: #fff;
     }
 
-    #console #caret::after {
-        content:"▋";
-        display: inline-block;
-        opacity: 0;
-    }
-
-    #console #consoleCommand:focus + #caret::after {
-        opacity: initial;
-        animation: blinker 1s step-end infinite;
+    #console #consoleCommand:focus {
+        outline: none;
     }

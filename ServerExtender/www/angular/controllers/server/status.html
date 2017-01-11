@@ -10,19 +10,12 @@
     </md-card-actions>
 </md-card>
 
-<md-card md-theme="dark-grey" flex>
-    <div flex ng-click="focusCommand()">
-        <md-card-title flex="none">Console</md-card-title>
-        <md-card-content flex="100" id="console">
-
-            <pre>{{consoleLog}}</pre>
-
-            <form ng-submit="executeCommand()" flex layout="row">
-                <input ng-model="command" id="consoleCommand" style="">
-
-                <div id="caret">>{{command}}</div>
-            </form>
-
-        </md-card-content>
-    </div>
+<md-card md-theme="dark-grey" flex ng-click="focusCommand()">
+    <md-card-title flex="none">Console</md-card-title>
+    <md-card-content flex="100" id="console">
+        <pre>{{consoleLog}}</pre>
+        <form ng-submit="executeCommand()" flex layout="row">
+            <span>Web\{{connectionId}}></span><input ng-model="command" ng-keydown="keyDownConsole($event)" id="consoleCommand" autocomplete="off">
+        </form>
+    </md-card-content>
 </md-card>
