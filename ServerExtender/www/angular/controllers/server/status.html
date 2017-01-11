@@ -11,16 +11,18 @@
 </md-card>
 
 <md-card md-theme="dark-grey" flex>
-    <md-card-title flex="none">Console</md-card-title>
-    <md-card-content flex="100" id="console">
-        <div ng-click="focusCommand()">
+    <div flex ng-click="focusCommand()">
+        <md-card-title flex="none">Console</md-card-title>
+        <md-card-content flex="100" id="console">
+
             <pre>{{consoleLog}}</pre>
 
             <form ng-submit="executeCommand()" flex layout="row">
                 <input ng-model="command" id="consoleCommand" style="">
 
                 <div id="caret">>{{command}}</div>
-            </form>           
-        </div>
-    </md-card-content>
+            </form>
+
+        </md-card-content>
+    </div>
 </md-card>
