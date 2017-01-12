@@ -11,10 +11,13 @@
             listeners: {
                 'replaceConfig': function (serverConfig) {
                     $rootScope.$emit('serverConfigHub:replaceConfig', serverConfig);
+                },
+                'setValue': function (key, value) {
+                    $rootScope.$emit('serverConfigHub:setValue', key, value);
                 }
             },
 
-            methods: ['getConfig', 'reloadConfig'],
+            methods: ['getConfig', 'setValue', 'reloadConfig'],
 
             errorHandler: function (error) {
                 console.error(error);
@@ -50,6 +53,10 @@
 
         service.reloadConfig = function () {
             hub.reloadConfig();
+        };
+
+        service.setValue = function (key, value) {
+            hub.setValue(key, value);
         };
 
         service.isConnected = function () {

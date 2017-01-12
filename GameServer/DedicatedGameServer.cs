@@ -313,6 +313,12 @@ namespace GameServer
 			return null;
 		}
 
+		public static void SaveServerConfig()
+		{
+			string configFilePath = Path.Combine(SavePath, "SpaceEngineers-Dedicated.cfg");
+			ServerConfig.Save(configFilePath);
+		}
+
 		private static bool Handler(VRage.Win32.WinApi.CtrlType sig)
 		{
 			switch (sig)

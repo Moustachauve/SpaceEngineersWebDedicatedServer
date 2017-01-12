@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Events\ServerConfigChangedArgs.cs" />
     <Compile Include="Events\ServerStatusChangedArgs.cs" />
+    <Compile Include="Helpers\ReflexionHelper.cs" />
     <Compile Include="Hubs\ServerConfigHub.cs" />
     <Compile Include="ServerStatus.cs" />
     <Compile Include="Hubs\ServerHub.cs" />
