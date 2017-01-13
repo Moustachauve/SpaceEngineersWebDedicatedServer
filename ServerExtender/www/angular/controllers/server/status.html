@@ -5,8 +5,8 @@
 
     <md-card-actions layout="row" layout-align="end center" flex>
         <md-button ng-click="refreshStatus()">Refresh</md-button>
-        <md-button ng-click="startServer()" ng-disabled="serverStatus == 'Starting' || serverStatus == 'Started'">Start</md-button>
-        <md-button ng-click="startServer()" ng-disabled="serverStatus != 'Starting' && serverStatus != 'Started'">Stop</md-button>
+        <md-button ng-click="startServer()" ng-disabled="serverStatus != 'Stopped'">Start</md-button>
+        <md-button ng-click="stopServer()" ng-disabled="serverStatus != 'Started'">Stop</md-button>
     </md-card-actions>
 </md-card>
 

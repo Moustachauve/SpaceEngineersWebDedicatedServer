@@ -3,7 +3,7 @@
     .factory('serverHubService', ['$rootScope', 'Hub', function ($rootScope, Hub) {
 
         var service = this;
-        
+
         var hub = new Hub('serverHub', {
             rootPath: 'http://localhost:9000/signalr',
 
@@ -22,20 +22,13 @@
             stateChanged: function (state) {
                 switch (state.newState) {
                     case $.signalR.connectionState.connecting:
-                        console.log('---connecting---');
-
                         break;
                     case $.signalR.connectionState.connected:
-                        console.log('---connected---');
-
                         hub.updateStatus();
                         break;
                     case $.signalR.connectionState.reconnecting:
-                        console.log('---reconnecting---');
-
                         break;
                     case $.signalR.connectionState.disconnected:
-                        console.log('---disconnected---');
                         break;
                 }
             },
@@ -58,6 +51,6 @@
         service.isConnected = function () {
             return hub.connection.state == $.signalR.connectionState.connected;
         };
-        
+
         return service;
     }]);

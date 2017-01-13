@@ -101,6 +101,11 @@ namespace ServerExtender
 
 			switch (value)
 			{
+				case "restart":
+					System.Diagnostics.Process.Start(Environment.GetCommandLineArgs()[0]);
+					Environment.Exit(0);
+
+					break;
 				case "ping":
 					WriteLine("Pong!");
 					break;

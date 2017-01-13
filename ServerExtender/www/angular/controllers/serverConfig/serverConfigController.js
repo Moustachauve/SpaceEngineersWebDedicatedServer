@@ -25,11 +25,9 @@ function serverConfigController($scope, $rootScope, serverConfigHubService, serv
 
     $rootScope.$on('serverConfigHub:replaceConfig', function (event, serverConfig) {
         $scope.serverConfig = serverConfig;
-        console.log(serverConfig);
         $scope.$apply();
     });
     $rootScope.$on('serverConfigHub:setValue', function (event, key, value) {
-        console.log('setValue! ' + key + ':' + value);
         setConfigFromKey(key, value);
         $scope.$apply();
     });
@@ -59,8 +57,6 @@ function serverConfigController($scope, $rootScope, serverConfigHubService, serv
 
     $scope.saveValue = function (key) {
         var value = getConfigFromKey(key);
-        console.log('save ' + key + ':' + value);
-        console.log(value);
         var currentItem = $scope.serverConfig;
         // TODO: Add a promise or something to confirm that the server did save the value and show a toast to the user
         //       to congratulate him :)

@@ -25,18 +25,13 @@
             stateChanged: function (state) {
                 switch (state.newState) {
                     case $.signalR.connectionState.connecting:
-                        console.log('---connecting---');
-
                         break;
                     case $.signalR.connectionState.connected:
                         hub.getConsoleText();
                         break;
                     case $.signalR.connectionState.reconnecting:
-                        console.log('---reconnecting---');
-
                         break;
                     case $.signalR.connectionState.disconnected:
-                        console.log('---disconnected---');
                         break;
                 }
             },

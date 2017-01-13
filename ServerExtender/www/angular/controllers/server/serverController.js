@@ -59,7 +59,6 @@ function errorController($scope, $rootScope, $timeout, serverHubService, console
             
             return;
         }
-        console.log("executeCommand: " + $scope.command);
         consoleHubService.executeCommand($scope.command);
         commandHistory.unshift($scope.command)
         commandHistoryIndex = 0;
