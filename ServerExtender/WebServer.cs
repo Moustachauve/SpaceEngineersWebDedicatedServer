@@ -42,7 +42,7 @@ namespace ServerExtender
 				name: "Fallback",
 				routeTemplate: "{name}/{*other}",
 				defaults: new { controller = "Default", action = "Index" },
-				constraints: new { name = "^(?!(api|angular|css|fonts|img|js|favicon.ico)$).*$" }
+				constraints: new { name = "^(?!(api|angular|plugins|css|fonts|img|js|favicon.ico)$).*$" }
 			);
 
 			appBuilder.UseCors(CorsOptions.AllowAll);

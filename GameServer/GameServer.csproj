@@ -168,6 +168,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServerPlugin\ServerPlugin.csproj">
+      <Project>{94b4ae65-6e2b-4d24-a212-4531f6c9965c}</Project>
+      <Name>ServerPlugin</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

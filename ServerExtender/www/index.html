@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 
-<html ng-app="ServerExtender" ng-controller="applicationController">
+<html ng-controller="applicationController">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
@@ -9,41 +9,42 @@
     <title ng-bind="pageTitle">Space Engineers Dedicated Server</title>
 
     <link rel="stylesheet" href="/css/angular-material.min.css">
-    <link href="font/material-icons/material-icons.css" rel="stylesheet" />
+    <link href="fonts/material-icons/material-icons.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
 </head>
 <body ng-cloak layout="column">
-    <ng-include src="'toolbar.html'"></ng-include>
+    <ng-include src="'angular/toolbar.html'"></ng-include>
 
     <section layout="row" flex id="page_container">
-        <ng-include src="'sidenav.html'" layout="column"></ng-include>
+        <ng-include src="'angular/sidenav.html'" layout="column"></ng-include>
 
         <md-content flex layout-padding layout="column">
             <div layout="column" ng-view flex></div>
         </md-content>
     </section>
 
+    <script src="/js/lib/require.min.js"></script>
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/angular.min.js"></script>
     <script src="/js/lib/angular-animate.min.js"></script>
     <script src="/js/lib/angular-aria.min.js"></script>
     <script src="/js/lib/angular-messages.min.js"></script>
     <script src="/js/lib/angular-route.min.js"></script>
-
     <script src="/js/lib/angular-material.min.js"></script>
-
     <script src="/js/lib/jquery.signalR.min.js"></script>
     <script src="http://localhost:9000/signalr/hubs"></script>
     <script src="/js/lib/signalr-hub.min.js"></script>
 
-    <script src="/angular/application.js"></script>
+    <script src="/js/main.js"></script>
+    
+    <!--<script src="/angular/application.js"></script>
     <script src="/angular/route.js"></script>
-    <script src="/angular/Services/serverHubService.js"></script>
-    <script src="/angular/Services/consoleHubService.js"></script>
-    <script src="/angular/Services/serverConfigHubService.js"></script>
+    <script src="/angular/services/serverHubService.js"></script>
+    <script src="/angular/services/consoleHubService.js"></script>
+    <script src="/angular/services/serverConfigHubService.js"></script>
     <script src="/angular/controllers/error/errorController.js"></script>
     <script src="/angular/controllers/server/serverController.js"></script>
     <script src="/angular/controllers/entities/entitiesController.js"></script>
-    <script src="/angular/controllers/serverConfig/serverConfigController.js"></script>
+    <script src="/angular/controllers/serverConfig/serverConfigController.js"></script>-->
 </body>
 </html>

@@ -1,56 +1,59 @@
-﻿angular
-    .module('ServerExtender')
-    .factory('serverHubService', ['$rootScope', 'Hub', function ($rootScope, Hub) {
+﻿define(['angular/application'], function () {
 
-        var service = this;
+    angular
+        .module('ServerExtenderApp')
+        .factory('serverHubService', ['$rootScope', 'Hub', function ($rootScope, Hub) {
 
-        var hub = new Hub('serverHub', {
-            rootPath: 'http://localhost:9000/signalr',
+            var service = this;
 
-            listeners: {
-                'updateStatus': function (status) {
-                    $rootScope.$emit('serverHub:updateStatus', status);
-                }
-            },
+            var hub = new Hub('serverHub', {
+                rootPath: 'http://localhost:9000/signalr',
 
-            methods: ['start', 'stop', 'updateStatus'],
+                listeners: {
+                    'updateStatus': function (status) {
+                        $rootScope.$emit('serverHub:updateStatus', status);
+                    }
+                },
 
-            errorHandler: function (error) {
-                console.error(error);
-            },
+                methods: ['start', 'stop', 'updateStatus'],
 
-            stateChanged: function (state) {
-                switch (state.newState) {
-                    case $.signalR.connectionState.connecting:
-                        break;
-                    case $.signalR.connectionState.connected:
-                        hub.updateStatus();
-                        break;
-                    case $.signalR.connectionState.reconnecting:
-                        break;
-                    case $.signalR.connectionState.disconnected:
-                        break;
-                }
-            },
+                errorHandler: function (error) {
+                    console.error(error);
+                },
 
-            useSharedConnection: false
-        });
+                stateChanged: function (state) {
+                    switch (state.newState) {
+                        case $.signalR.connectionState.connecting:
+                            break;
+                        case $.signalR.connectionState.connected:
+                            hub.updateStatus();
+                            break;
+                        case $.signalR.connectionState.reconnecting:
+                            break;
+                        case $.signalR.connectionState.disconnected:
+                            break;
+                    }
+                },
 
-        service.updateStatus = function () {
-            hub.updateStatus();
-        };
+                useSharedConnection: false
+            });
 
-        service.startServer = function () {
-            hub.start();
-        };
+            service.updateStatus = function () {
+                hub.updateStatus();
+            };
 
-        service.stopServer = function () {
-            hub.stop();
-        };
+            service.startServer = function () {
+                hub.start();
+            };
 
-        service.isConnected = function () {
-            return hub.connection.state == $.signalR.connectionState.connected;
-        };
+            service.stopServer = function () {
+                hub.stop();
+            };
 
-        return service;
-    }]);
+            service.isConnected = function () {
+                return hub.connection.state === $.signalR.connectionState.connected;
+            };
+
+            return service;
+        }]);
+});

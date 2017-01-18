@@ -132,7 +132,11 @@
   <ItemGroup>
     <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Controller\DefaultController.cs" />
+    <Compile Include="Controller\PluginsController.cs" />
     <Compile Include="Hubs\ConsoleHub.cs" />
+    <Compile Include="Plugins\Exceptions\InvalidPluginException.cs" />
+    <Compile Include="Plugins\PluginContainer.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebServer.cs" />
@@ -171,14 +175,17 @@
     <Content Include="www\angular\controllers\server\status.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\angular\Services\consoleHubService.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\angular\Services\serverConfigHubService.js">
+    <Content Include="www\angular\services\consoleHubService.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\angular\Services\serverHubService.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="www\angular\services\routeResolver.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\services\serverConfigHubService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\angular\services\serverHubService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\css\angular-material.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -189,10 +196,10 @@
     <Content Include="www\favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\font\material-icons\material-icons.css">
+    <Content Include="www\fonts\material-icons\material-icons.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\font\material-icons\MaterialIcons-Regular.svg">
+    <Content Include="www\fonts\material-icons\MaterialIcons-Regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\js\lib\angular-animate.min.js">
@@ -222,28 +229,34 @@
     <Content Include="www\angular\route.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\js\lib\require.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\js\lib\signalr-hub.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\sidenav.html">
+    <Content Include="www\angular\sidenav.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\toolbar.html">
+    <Content Include="www\angular\toolbar.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="www\font\material-icons\MaterialIcons-Regular.eot">
+    <Content Include="www\js\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="www\fonts\material-icons\MaterialIcons-Regular.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="www\font\material-icons\MaterialIcons-Regular.ijmap">
+    <None Include="www\fonts\material-icons\MaterialIcons-Regular.ijmap">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="www\font\material-icons\MaterialIcons-Regular.ttf">
+    <None Include="www\fonts\material-icons\MaterialIcons-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="www\font\material-icons\MaterialIcons-Regular.woff">
+    <None Include="www\fonts\material-icons\MaterialIcons-Regular.woff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="www\font\material-icons\MaterialIcons-Regular.woff2">
+    <None Include="www\fonts\material-icons\MaterialIcons-Regular.woff2">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="www\index.html">
@@ -255,8 +268,14 @@
       <Project>{b679e2f4-0745-44ba-830b-a3b2468b1d27}</Project>
       <Name>GameServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerPlugin\ServerPlugin.csproj">
+      <Project>{94b4ae65-6e2b-4d24-a212-4531f6c9965c}</Project>
+      <Name>ServerPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="www\angular\plugins\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>IF NOT EXIST "$(SolutionDir)GameFiles" CALL "$(SolutionDir)bootstrap.bat"

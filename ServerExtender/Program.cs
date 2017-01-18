@@ -1,7 +1,6 @@
-﻿
-using System;
+﻿using System;
 using GameServer;
-
+using ServerExtender.Plugins;
 
 namespace ServerExtender
 {
@@ -19,8 +18,13 @@ namespace ServerExtender
 			WebServer webServer = new WebServer();
 			webServer.Start();
 
-			Console.WriteLine("Server started.");
+			Console.WriteLine("Web server started.");
+			Console.WriteLine("Loading plugins...");
 
+			PluginManager.Instance.ScanPlugins();
+			PluginManager.Instance.LoadPlugins();
+
+			Console.WriteLine("Plugins loaded.");
 
 			Console.WriteLine("Type 'quit' to exit the server.");
 			while (ConsoleHandler.Instance.StayOpen)

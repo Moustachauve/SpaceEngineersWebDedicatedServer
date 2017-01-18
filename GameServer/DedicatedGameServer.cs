@@ -247,10 +247,9 @@ namespace GameServer
 				IsStopping = false;
 				NotifyStatusChanged();
 
-				if (MySandboxGame.IsConsoleVisible && !MySandboxGame.IsReloading && !Console.IsInputRedirected)
-				{
-					Console.WriteLine("Server stopped.");
-				}
+				Console.WriteLine("Server stopped.");
+				System.Diagnostics.Process.Start(Environment.GetCommandLineArgs()[0]);
+				Environment.Exit(0);
 			}
 		}
 
