@@ -70,10 +70,3 @@ function loadCss(url) {
     link.href = url;
     document.getElementsByTagName("head")[0].appendChild(link);
 }
-
-function loadJavascript(url) {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = url;
-    document.body.appendChild(script);
-}
