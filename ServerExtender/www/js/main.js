@@ -3,13 +3,13 @@
     urlArgs: 'v=1.0'
 });
 
-loadRequiredFiles();
-
 var angularPluginRoutes = [];
 
 // Hardcode your site url if you are using the WebInterface solution
 //var siteUrl = 'http://localhost:9000';
 var siteUrl = '';
+
+loadRequiredFiles();
 
 function loadRequiredFiles() {
 

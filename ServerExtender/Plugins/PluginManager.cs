@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using VRage.Plugins;
 
 namespace ServerExtender.Plugins
 {
@@ -27,11 +28,24 @@ namespace ServerExtender.Plugins
 			}
 		}
 
+		public VRagePlugin VRagePlugin { get; private set; }
+
 		private List<PluginContainer> plugins;
 
 		private PluginManager()
 		{
 			plugins = new List<PluginContainer>();
+			VRagePlugin = new VRagePlugin();
+			InjectVRageGamePlugin();
+		}
+
+		public void InjectVRageGamePlugin()
+		{
+			Console.WriteLine("Injecting VRage plugin in the server...");
+			FieldInfo vragePluginsField = typeof(MyPlugins).GetField("m_plugins", BindingFlags.Static | BindingFlags.NonPublic);
+			var vragePlugins = vragePluginsField.GetValue(null) as List<VRage.Plugins.IPlugin>;
+			vragePlugins.Add(VRagePlugin);
+			Console.WriteLine("VRage plugin injected successfully.");
 		}
 
 		public void ScanPlugins()
