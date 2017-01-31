@@ -1,11 +1,7 @@
-﻿using ServerExtender.Plugins.Events;
+﻿using ServerPlugin.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ServerExtender.Plugins
+namespace ServerPlugin
 {
 	public class VRagePlugin : VRage.Plugins.IPlugin
 	{

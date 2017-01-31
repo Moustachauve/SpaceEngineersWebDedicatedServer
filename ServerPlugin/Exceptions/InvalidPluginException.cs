@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerExtender.Plugins.Exceptions
+namespace ServerPlugin.Exceptions
 {
 	public class InvalidPluginException : Exception
 	{

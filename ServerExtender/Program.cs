@@ -1,6 +1,6 @@
 ﻿using System;
 using GameServer;
-using ServerExtender.Plugins;
+using ServerPlugin;
 
 namespace ServerExtender
 {

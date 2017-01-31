@@ -1,5 +1,5 @@
-﻿using ServerExtender.Plugins.Exceptions;
-using ServerPlugin;
+﻿using ServerPlugin;
+using ServerPlugin.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerExtender.Plugins
+namespace ServerPlugin
 {
 	public class PluginContainer
 	{
@@ -107,7 +107,7 @@ namespace ServerExtender.Plugins
 
 			foreach (FileInfo fi in source.GetFiles())
 			{
-				Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+				Console.WriteLine(@"Copying {0}\{1}", target.Name, fi.Name);
 				fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
 			}
 

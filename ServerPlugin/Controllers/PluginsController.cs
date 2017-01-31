@@ -1,4 +1,4 @@
-﻿using ServerExtender.Plugins;
+﻿using ServerPlugin;
 using ServerPlugin.Web;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace ServerExtender.Controller
+namespace ServerExtender.Controllers
 {
 	public class PluginsController : ApiController
 	{

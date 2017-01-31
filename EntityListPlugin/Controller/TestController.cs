@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace ServerExtender.Controller
+namespace ServerExtender.Controllers
 {
 	public class TestController : ApiController
 	{

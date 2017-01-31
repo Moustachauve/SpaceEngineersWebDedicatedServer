@@ -1,5 +1,5 @@
-﻿using ServerExtender.Plugins.Exceptions;
-using ServerPlugin;
+﻿using ServerPlugin;
+using ServerPlugin.Exceptions;
 using ServerPlugin.Web;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VRage.Plugins;
 
-namespace ServerExtender.Plugins
+namespace ServerPlugin
 {
 	public class PluginManager
 	{

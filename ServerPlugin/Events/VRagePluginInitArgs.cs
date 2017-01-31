@@ -1,4 +1,4 @@
-﻿namespace ServerExtender.Plugins.Events
+﻿namespace ServerPlugin.Events
 {
 	public class VRagePluginInitArgs
 	{
