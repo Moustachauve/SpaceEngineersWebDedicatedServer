@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace ServerExtender.Controllers
+namespace ServerPlugin.Controllers
 {
 	public class PluginsController : ApiController
 	{
@@ -23,6 +23,11 @@ namespace ServerExtender.Controllers
 			var requiredWebResources = PluginManager.Instance.GetAngularRoutes();
 
 			return Json(requiredWebResources);
+		}
+
+		public IHttpActionResult GetLoadedPlugins()
+		{
+			return Json(PluginManager.Instance.Plugins);
 		}
 	}
 }

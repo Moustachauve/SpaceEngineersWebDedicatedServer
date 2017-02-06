@@ -81,6 +81,7 @@
     <Compile Include="Exceptions\InvalidPluginException.cs" />
     <Compile Include="Hubs\PluginsHub.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="IWebPlugin.cs" />
     <Compile Include="PluginContainer.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

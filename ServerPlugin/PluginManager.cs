@@ -31,6 +31,7 @@ namespace ServerPlugin
 		public VRagePlugin VRagePlugin { get; private set; }
 
 		private List<PluginContainer> plugins;
+		public IEnumerable<PluginContainer> Plugins { get { return plugins.AsReadOnly(); } }
 
 		private PluginManager()
 		{
@@ -96,10 +97,14 @@ namespace ServerPlugin
 			{
 				if (!pluginContainer.IsLoaded)
 					continue;
+				if (!(pluginContainer.Plugin is IWebPlugin))
+					continue;
 
-				if (pluginContainer.Plugin.RequiredWebResources != null)
+				var plugin = pluginContainer.Plugin as IWebPlugin;
+
+				if (plugin.RequiredWebResources != null)
 				{
-					foreach (var webRessource in pluginContainer.Plugin.RequiredWebResources)
+					foreach (var webRessource in plugin.RequiredWebResources)
 					{
 						string resourcePath = Path.Combine(PLUGIN_FOLDER_PATH, pluginContainer.FileName, webRessource.Path);
 						requiredWebResources.Add(new WebResource(resourcePath));
@@ -118,11 +123,15 @@ namespace ServerPlugin
 			{
 				if (!pluginContainer.IsLoaded)
 					continue;
+				if (!(pluginContainer.Plugin is IWebPlugin))
+					continue;
 
-				if (pluginContainer.Plugin.RequiredWebResources != null)
+				var plugin = pluginContainer.Plugin as IWebPlugin;
+
+				if (plugin.RequiredWebResources != null)
 				{
 					string pluginPathPrefix = Path.Combine(PLUGIN_FOLDER_PATH, pluginContainer.FileName);
-					var controllerResources = pluginContainer.Plugin.RequiredWebResources.OfType<AngularControllerResource>();
+					var controllerResources = plugin.RequiredWebResources.OfType<AngularControllerResource>();
 					foreach (var controllerResource in controllerResources)
 					{
 						string route = '/' + pluginContainer.FileName + '/' + controllerResource.Route;

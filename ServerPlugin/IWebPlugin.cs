@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServerPlugin
 {
-	public interface IPlugin
+	public interface IWebPlugin
 	{
-		string Name { get; }
-		string Version { get; }
+		IList<WebResource> RequiredWebResources { get; }
+		WebResource DefaultRoute { get; }
 	}
 }
